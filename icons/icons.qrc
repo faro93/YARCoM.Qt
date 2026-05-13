@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="main">
+    <file>prefs.png</file>
+    <file>YARCoM.png</file>
+    <file>edit.png</file>
+    <file>database.png</file>
+    <file>data-quality.png</file>
+    <file>server.png</file>
+    <file>computer.png</file>
+    <file>add_computer.png</file>
+    <file>storage.png</file>
+    <file>network.png</file>
+    <file>trash.png</file>
+    <file>add_folder.png</file>
+    <file>add-database.png</file>
+  </qresource>
+</RCC>

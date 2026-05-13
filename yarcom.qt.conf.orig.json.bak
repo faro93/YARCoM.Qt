@@ -1,0 +1,69 @@
+{
+    "global": {
+        "kbdx": {
+            "pro": "/home/faro/Documents/KeePass.db/faro.pro.kdbx",
+            "perso": "/home/faro/Documents/KeePass.db/faro.perso.kdbx"
+        },
+        "apps": {
+            "SSH1": {
+                "bin": "/usr/bin/ssh",
+                "args": ""
+            },
+            "SSH2": {
+                "bin": "/usr/bin/sshpass",
+                "args": "-p <password> /usr/bin/ssh -l <user> -p <port> <ip>"
+            },
+            "FileZilla": {
+                "bin": "/usr/bin/filezilla",
+                "args": ""
+            }
+        },
+        "files": [
+            "bla.json",
+            "ble.json"
+        ]
+    },
+    "connexions": {
+        "linux": {
+            "pepe.faro": {
+                "ip": "172.21.14.32",
+                "port": "22",
+                "app": "SSH",
+                "kbdx": "pro",
+                "user": "faro"
+            }
+        },
+        "rpi": {
+            "jasper.faro": {
+                "ip": "172.21.14.33",
+                "port": "22",
+                "app": "SSH",
+                "kbdx": "perso",
+                "user": "faro"
+            },
+            "granny.faro": {
+                "ip": "172.21.14.31",
+                "port": "22",
+                "app": "SSH",
+                "kbdx": "pro",
+                "user": "faro"
+            },
+            "titi.faro": {
+                "ip": "172.21.14.34",
+                "port": "22",
+                "app": "SSH",
+                "kbdx": "perso",
+                "user": "faro"
+            }
+        },
+        "others": {
+            "DataTank1.fadmin": {
+                "ip": "172.21.14.10",
+                "port": "22",
+                "app": "SSH",
+                "kbdx": "perso",
+                "user": ""
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="Main">
+    <file>color.png</file>
+  </qresource>
+  <qresource prefix="Buttons">
+    <file>no.png</file>
+    <file>yes.png</file>
+  </qresource>
+</RCC>

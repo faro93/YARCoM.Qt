@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>988</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>180</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>320</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../icons/icons.qrc">
+    <normaloff>:/main/YARCoM.png</normaloff>:/main/YARCoM.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QGroupBox" name="gb_Tree">
+      <property name="title">
+       <string>Liste des connexions</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
+       <item>
+        <layout class="QHBoxLayout" name="hl_TreeButtons">
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_TreeAddSection">
+           <property name="toolTip">
+            <string>Ajouter une section</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../icons/icons.qrc">
+             <normaloff>:/main/add_folder.png</normaloff>:/main/add_folder.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_TreeAddCnx">
+           <property name="toolTip">
+            <string>Ajouter une connexion</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../icons/icons.qrc">
+             <normaloff>:/main/add_computer.png</normaloff>:/main/add_computer.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="shortcut">
+            <string>Ctrl+S</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_TreeDelete">
+           <property name="toolTip">
+            <string>Supprimer l'objet</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../icons/icons.qrc">
+             <normaloff>:/main/trash.png</normaloff>:/main/trash.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTreeWidget" name="tw_Cnx">
+         <property name="headerHidden">
+          <bool>true</bool>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="hl_ToggleTree">
+         <item>
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pb_FoldUnfoldTree">
+           <property name="text">
+            <string>Plier/Déplier</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="fl_TreeSearch">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lb_Search">
+           <property name="text">
+            <string>Rechercher</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="le_Search"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="gb_Detail">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="title">
+       <string>Detail de la connexion</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QFormLayout" name="fl_Detail">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lb_Hostname">
+           <property name="text">
+            <string>Nom d'hôte</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="le_Hostname"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lb_IP">
+           <property name="text">
+            <string>Adresse IP</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="le_IP"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lb_Port">
+           <property name="text">
+            <string>Port</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="le_Port"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lb_App">
+           <property name="text">
+            <string>Application</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="cb_Application"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="lb_KBDX">
+           <property name="text">
+            <string>Coffre KeePass</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="cb_KBDX"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="lb_User">
+           <property name="text">
+            <string>Utilisateur</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLineEdit" name="le_User"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gl_DetailButtons">
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pb_ModifyCnx">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Modifier la connexion</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../icons/icons.qrc">
+             <normaloff>:/main/edit.png</normaloff>:/main/edit.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>320</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="m_File">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="action_Save"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="action_Close"/>
+    <addaction name="separator"/>
+    <addaction name="action_Preferences"/>
+    <addaction name="separator"/>
+    <addaction name="action_Quit"/>
+   </widget>
+   <widget class="QMenu" name="m_Edit">
+    <property name="title">
+     <string>&amp;Edition</string>
+    </property>
+    <widget class="QMenu" name="menuSection">
+     <property name="title">
+      <string>Section</string>
+     </property>
+     <addaction name="actionAddSection"/>
+     <addaction name="actionRenameSection"/>
+     <addaction name="actionDeleteSection"/>
+    </widget>
+    <widget class="QMenu" name="menuConnection">
+     <property name="title">
+      <string>Connexion</string>
+     </property>
+     <addaction name="actionAddCnx"/>
+     <addaction name="actionDeleteCnx"/>
+     <addaction name="actionModifyCnx"/>
+    </widget>
+    <addaction name="menuSection"/>
+    <addaction name="menuConnection"/>
+   </widget>
+   <widget class="QMenu" name="m_Help">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="m_File"/>
+   <addaction name="m_Edit"/>
+   <addaction name="m_Help"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Ouvrir</string>
+   </property>
+   <property name="iconText">
+    <string>Ouvrir</string>
+   </property>
+   <property name="toolTip">
+    <string>Ouvrir</string>
+   </property>
+  </action>
+  <action name="action_Save">
+   <property name="text">
+    <string>Enregistrer</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Enregistrer sous</string>
+   </property>
+  </action>
+  <action name="action_Close">
+   <property name="text">
+    <string>Fermer</string>
+   </property>
+  </action>
+  <action name="action_Preferences">
+   <property name="text">
+    <string>Préférences</string>
+   </property>
+  </action>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quitter</string>
+   </property>
+  </action>
+  <action name="actionAddSection">
+   <property name="text">
+    <string>Ajouter</string>
+   </property>
+  </action>
+  <action name="actionRenameSection">
+   <property name="text">
+    <string>Renommer</string>
+   </property>
+  </action>
+  <action name="actionDeleteSection">
+   <property name="text">
+    <string>Effacer</string>
+   </property>
+  </action>
+  <action name="actionAddCnx">
+   <property name="text">
+    <string>Ajouter</string>
+   </property>
+  </action>
+  <action name="actionAddCnxAbove">
+   <property name="text">
+    <string>Ajouter au dessus</string>
+   </property>
+  </action>
+  <action name="actionmodify">
+   <property name="text">
+    <string>Modify</string>
+   </property>
+  </action>
+  <action name="actionModifyCnx">
+   <property name="text">
+    <string>Modifier</string>
+   </property>
+  </action>
+  <action name="actionDeleteCnx">
+   <property name="text">
+    <string>Supprimer</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>A propos</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
