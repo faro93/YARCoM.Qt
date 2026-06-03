@@ -14,7 +14,7 @@ from kbdx.kbdx import KBDX_Dialog
 from preferences.preferences import Preferences_Dialog
 
 #TODO : dans on_twCnx_itemDoubleClicked
-#DONE :     Parser les arguments de la ligne de commande
+#TODO :     Parser les arguments de la ligne de commande
 #TODO :     Lancer la commande avec subprocess.Popen et gérer les erreurs
 
 #DONE : Gérer le bouton "Ajouter une section" (ajout d'une branche dans l'arborescence)
@@ -312,8 +312,9 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         action = menu.exec(self.tw_Cnx.viewport().mapToGlobal(position))
         if action in apps_list:
             app_name = action.text()
-            self.logger.debug(f"Lancement de l'application '{app_name}' pour la connexion '{item.text(0)}'")
+            self.logger.info(f"Lancement de l'application '{app_name}' pour la connexion '{item.text(0)}'")
             # Ici, ajouter le code pour lancer l'application avec les paramètres de la connexion
+            self.run_command(item)
 
     def save_expansion_state(self):
         """Sauvegarde l'état d'expansion de l'arborescence"""
