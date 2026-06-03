@@ -14,7 +14,7 @@ from kbdx.kbdx import KBDX_Dialog
 from preferences.preferences import Preferences_Dialog
 
 #TODO : dans on_twCnx_itemDoubleClicked
-#TODO :     Parser les arguments de la ligne de commande
+#DONE :     Parser les arguments de la ligne de commande
 #TODO :     Lancer la commande avec subprocess.Popen et gérer les erreurs
 
 #DONE : Gérer le bouton "Ajouter une section" (ajout d'une branche dans l'arborescence)
@@ -41,7 +41,7 @@ from preferences.preferences import Preferences_Dialog
 #DONE :     désélectionne si déjà sélectionné
 
 #TODO : Gérer drag&drop dans l'arborescence
-#TODO :     debug dropEvent sous le dernier item d'une branche
+#DONE :     debug dropEvent sous le dernier item d'une branche
 #DONE :     gérer évènnement dropEvent
 #DONE :     gérer modification dictionnaire
 #TODO :     sauvegarder les cnx dans cnx pour éviter de perdre les cnx déplacées
@@ -89,24 +89,24 @@ class CustomQTreeWidget(QTreeWidget):
         if event.buttons() == Qt.LeftButton and self.sourceItem is None:
             self.sourceItem = self.itemAt(event.position().toPoint())
             if self.sourceItem is not None:
-                self.logger.info(f"Début du drag&drop pour l'item '{self.sourceItem.text(0)}'")
+                self.logger.debug(f"Début du drag&drop pour l'item '{self.sourceItem.text(0)}'")
             else:
-                self.logger.info(f"Début du drag&drop, mais aucun item sous le curseur.")
+                self.logger.debug(f"Début du drag&drop, mais aucun item sous le curseur.")
         super().mouseMoveEvent(event)
     
     def dragEnterEvent(self, event):
         # self.logger.info(f"event={event}")
         # self.sourceItem = self.itemAt(event.position().toPoint())
-        self.logger.info(f'sourceItem = {self.sourceItem.text(0) if self.sourceItem else None}, itemType = {self.sourceItem.itemType if self.sourceItem else None}')
+        self.logger.debug(f'sourceItem = {self.sourceItem.text(0) if self.sourceItem else None}, itemType = {self.sourceItem.itemType if self.sourceItem else None}')
         super().dragEnterEvent(event)
 
     def dragLeaveEvent(self, event):
         # self.logger.info(f"event={event}")
-        self.logger.info(f"Drag&drop annulé, purge de self.sourceItem et self.targetItem en cours ...")
+        self.logger.debug(f"Drag&drop annulé, purge de self.sourceItem et self.targetItem en cours ...")
         self.sourceItem = None
         self.targetItem = None
-        self.logger.info(f"Purge de self.sourceItem et self.targetItem terminée.")
-        self.logger.info(f'sourceItem = {self.sourceItem.text(0) if self.sourceItem else None}, targetItem = {self.targetItem.text(0) if self.targetItem else None}')
+        self.logger.debug(f"Purge de self.sourceItem et self.targetItem terminée.")
+        self.logger.debug(f'sourceItem = {self.sourceItem.text(0) if self.sourceItem else None}, targetItem = {self.targetItem.text(0) if self.targetItem else None}')
         super().dragLeaveEvent(event)
 
     def dragMoveEvent(self, event):
@@ -114,7 +114,7 @@ class CustomQTreeWidget(QTreeWidget):
         self.targetItem = self.itemAt(event.position().toPoint())
         if not self.targetItem:
             event.ignore()
-            self.logger.info(f"Aucun item sous le curseur.")
+            self.logger.debug(f"Aucun item sous le curseur.")
             return
         
         if self.targetItem.itemType == "cnx":
@@ -142,13 +142,13 @@ class CustomQTreeWidget(QTreeWidget):
     def dropEvent(self, event):
         """Gère l'événement de drop pour déplacer un item"""
         # self.logger.info(f"event={event}")
-        self.logger.info(f"Déplacement de '{self.sourceItem.text(0)}' vers '{self.targetItem.text(0)}' en cours...")
-        self.logger.info(f"sourceItem.itemType='{self.sourceItem.itemType}', targetItem.itemType='{self.targetItem.itemType}'")
+        self.logger.debug(f"Déplacement de '{self.sourceItem.text(0)}' vers '{self.targetItem.text(0)}' en cours...")
+        self.logger.debug(f"sourceItem.itemType='{self.sourceItem.itemType}', targetItem.itemType='{self.targetItem.itemType}'")
         if self.sourceItem is None or self.targetItem is None:
-            self.logger.info(f"Drop annulé : sourceItem ou targetItem est None (sourceItem='{self.sourceItem.text(0) if self.sourceItem else None}', targetItem='{self.targetItem.text(0) if self.targetItem else None}').")
+            self.logger.debug(f"Drop annulé : sourceItem ou targetItem est None (sourceItem='{self.sourceItem.text(0) if self.sourceItem else None}', targetItem='{self.targetItem.text(0) if self.targetItem else None}').")
             return
         if self.sourceItem == self.targetItem:
-            self.logger.info(f"Drop annulé : sourceItem et targetItem sont identiques (sourceItem='{self.sourceItem.text(0) if self.sourceItem else None}', targetItem='{self.targetItem.text(0) if self.targetItem else None}').")
+            self.logger.debug(f"Drop annulé : sourceItem et targetItem sont identiques (sourceItem='{self.sourceItem.text(0) if self.sourceItem else None}', targetItem='{self.targetItem.text(0) if self.targetItem else None}').")
             return
         if self.targetItem.itemType == "cnx":
             if self.targetItem and self.sourceItem:
@@ -157,24 +157,24 @@ class CustomQTreeWidget(QTreeWidget):
                 top_zone = target_rect.adjusted(0, 0, 0, -half_height)
                 bottom_zone = target_rect.adjusted(0, half_height, 0, 0)
                 current_pos = event.position().toPoint()
-                self.logger.info(f"targetItem='{self.targetItem.text(0)}', target_rect={target_rect}, top_zone={top_zone}, bottom_zone={bottom_zone}, current_pos={current_pos}")
+                self.logger.debug(f"targetItem='{self.targetItem.text(0)}', target_rect={target_rect}, top_zone={top_zone}, bottom_zone={bottom_zone}, current_pos={current_pos}")
                 
                 if top_zone.contains(current_pos):
-                    self.logger.info(f"Insertion de '{self.sourceItem.text(0)}' au-dessus de '{self.targetItem.text(0)}'")
+                    self.logger.debug(f"Insertion de '{self.sourceItem.text(0)}' au-dessus de '{self.targetItem.text(0)}'")
                     self.insert_item_above(self.targetItem, self.sourceItem)
                 elif bottom_zone.contains(current_pos):
-                    self.logger.info(f"Insertion de '{self.sourceItem.text(0)}' en dessous de '{self.targetItem.text(0)}'")
+                    self.logger.debug(f"Insertion de '{self.sourceItem.text(0)}' en dessous de '{self.targetItem.text(0)}'")
                     self.insert_item_below(self.targetItem, self.sourceItem)
                 else:
-                    self.logger.info("Drop annulé : zone non autorisée.")
+                    self.logger.debug("Drop annulé : zone non autorisée.")
                     return
         else:
             super().dropEvent(event)  # Appelle le comportement par défaut
 
         self.sourceItem = None
         self.targetItem = None
-        self.logger.info(f"Purge de sourceItem (='{self.sourceItem}'), targetItem (='{self.targetItem}').")
-        self.logger.info("Drop effectué.")
+        self.logger.debug(f"Purge de sourceItem (='{self.sourceItem}'), targetItem (='{self.targetItem}').")
+        self.logger.debug("Drop effectué.")
         # self.yarcom.update_connexions_after_drop()
 
     def insert_item_above(self, target_item, source_item):
@@ -187,10 +187,10 @@ class CustomQTreeWidget(QTreeWidget):
 
     def insert_item_below(self, target_item, source_item):
         target_parent = target_item.parent() or self.invisibleRootItem()
-        target_row = target_parent.indexOfChild(target_item)
         source_parent = source_item.parent() or self.invisibleRootItem()
         source_row = source_parent.indexOfChild(source_item)
         source_parent.takeChild(source_row)
+        target_row = target_parent.indexOfChild(target_item)
         target_parent.insertChild(target_row + 1, source_item)
 
 class YARCOM(QMainWindow, Ui_MainWindow, QObject):
@@ -566,11 +566,12 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         if item.itemType == "branche":
             self.displayError("Sélectionnez une connexion valide.", auto_close=True)
             return
-
+        self.run_command(item)
+        
+    def run_command(self, item):
         # Récupérer l'app par défaut de la connexion
         app_name = item.itemCnx.get("app", "")
         app_conf = self.globalConf.get("apps", {}).get(app_name, {})
-        app_prebin = app_conf.get("prebin", "")
         app_bin = app_conf.get("bin", "")
         app_args = app_conf.get("args", "")
         user = item.itemCnx.get("user", "")
@@ -581,7 +582,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         if not app_bin or not ip:
             self.displayError("Impossible de lancer l'application : configuration incomplète.", auto_close=True)
             return
-        self.logger.debug(f"app_name={app_name},\napp_prebin={app_prebin},\napp_bin={app_bin},\napp_args={app_args},\nuser={user},\nip={ip},\nport={port},\nkbdx={kbdx}")
+        self.logger.debug(f"app_name={app_name},\napp_bin={app_bin},\napp_args={app_args},\nuser={user},\nip={ip},\nport={port},\nkbdx={kbdx}")
 
         # Vérifier si le(s) mot(s) de passe KeePass a/ont été saisi(s)
         if kbdx and not self.globalConf["kbdxFiles"][kbdx]["ciphered"]:
@@ -591,44 +592,47 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                 return
 
         # Rechercher le compte dans la base KeePass si kbdx et user sont définis
-        self.logger.debug(f"Recherche du compte '{user}' dans la base KeePass '{kbdx}'")
+        self.logger.info(f"Recherche du compte '{user}' dans la base KeePass '{kbdx}'")
         account_info = self.search_account_in_vault(kbdx, user)
         if account_info:
-            self.logger.debug(f"  - account_info   : {json.dumps(account_info, indent=4)}")
+            accountDatas = json.dumps(account_info, indent=4)
+            accountDatas = re.sub(r'("password"\s*:\s*").*(")', r'\1********\2', accountDatas)
+            self.logger.debug(f"  - account_info   : {accountDatas}")
         else:
-            self.logger.debug(f"Compte introuvable dans la base KeePass '{kbdx}'")
-
-
+            self.logger.info(f"Compte introuvable dans la base KeePass '{kbdx}'")
 
         # Création de la commande à lancer
-        cmd = []
-        self.logger.debug(f"cmd={cmd}")
+        cmd = list()
+        my_args = list()
+        if app_bin:
+            cmd.extend(app_bin.split())
+        for part in app_args.split():
+            part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port).replace("<password>", account_info.get("password", ""))
+            my_args.append(part)
+        cmd.append(' '.join(my_args))
+        cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
+        self.logger.debug(f"Lancement de : {cmdStringProtected}")
+        account_info.clear()  # Effacer les informations sensibles de la mémoire
 
-        # # Exemple pour SSH : lance la commande ssh user@ip -p port
-        # if app_name == "SSH":
-        #     cmd = [app_bin]
-        #     if user:
-        #         cmd.append(f"{user}@{ip}")
-        #     else:
-        #         cmd.append(ip)
-        #     if port:
-        #         cmd.extend(["-p", port])
-        #     if app_args:
-        #         cmd.extend(app_args.split())
+
+        # if sys.platform.startswith('win'):
+        #     # Sous Windows, utiliser shell=True pour permettre l'expansion des variables d'environnement et l'exécution de commandes internes
+        #     shell = False
         # else:
-        #     # Pour FileZilla ou autre, adapte la commande
-        #     cmd = [app_bin]
-        #     if ip:
-        #         cmd.append(ip)
-        #     if app_args:
-        #         cmd.extend(app_args.split())
+        #     # Sous Linux/Mac, cmd doit être une liste d'arguments et shell=False pour éviter les problèmes de sécurité
+        #     shell = False
+        #     if "ssh" in app_bin.lower() or "ssh" in app_args.lower():
+        #         # Si l'application est SSH, utiliser shell=True pour permettre l'expansion des variables d'environnement et l'exécution de commandes internes
+        #         shell = True
 
-        # self.logger.info(f"Lancement de : {' '.join(cmd)}")
-        # try:
-        #     subprocess.Popen(cmd)
-        #     self.logger.info(f"Lancement de : {' '.join(cmd)}")
-        # except Exception as e:
-        #     self.displayError(f"Erreur lors du lancement : {e}", delay=2000, auto_close=True)
+        try:
+            subprocess.Popen(cmd, shell=False)
+        except Exception as e:
+            self.displayError(f"Erreur lors du lancement : {e}", delay=2000, auto_close=True)
+        except FileNotFoundError:
+            print("Commande introuvable")
+        except subprocess.TimeoutExpired:
+            print("Temps d'attente dépassé")
 
     def on_pb_FoldUnfoldTree_clicked(self):
         """Plie ou déplie toute l'arborescence selon l'état actuel"""
