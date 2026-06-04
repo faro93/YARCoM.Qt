@@ -14,8 +14,12 @@ from kbdx.kbdx import KBDX_Dialog
 from preferences.preferences import Preferences_Dialog
 
 #TODO : dans on_twCnx_itemDoubleClicked
-#TODO :     Parser les arguments de la ligne de commande
-#TODO :     Lancer la commande avec subprocess.Popen et gérer les erreurs
+#DONE :     Parser les arguments de la ligne de commande
+#DONE :     Lancer la commande avec subprocess.Popen et gérer les erreurs
+#DONE :     Effacer les informations sensibles de la mémoire après le lancement de la commande
+#TODO :     Discriminer le compte dans la base KeePass avec le hostname et le user
+#TODO :     Isoler run_command dans une fonction à part pour pouvoir l'appeler depuis le menu contextuel avec juste la commande à lancer
+#TODO :     Ecrire une fonction pour générer les commandes à passer dans run_command (double clic ou menu contextuel)
 
 #DONE : Gérer le bouton "Ajouter une section" (ajout d'une branche dans l'arborescence)
 #DONE :     Qd item sélectionner, ajouter une sous-branche
