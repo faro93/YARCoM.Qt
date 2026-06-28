@@ -18,6 +18,7 @@ class Preferences_Dialog(QDialog, Ui_Dialog):
         self.logger = logging.getLogger(self.__class__.__name__)
         # self.logger.setLevel(logging.DEBUG)
 
+        self.resize(700, 460)
         # Variables diverses
         self.prefFiles = prefFiles
         self.lb_Pref = list()
@@ -37,7 +38,7 @@ class Preferences_Dialog(QDialog, Ui_Dialog):
 
         # Affichage de la liste des applications dans tv_apps
         self.appsModel = QStandardItemModel()
-        self.appsModel.setHorizontalHeaderLabels(["Nom", "Chemin du binaire", "Arguments"])
+        self.appsModel.setHorizontalHeaderLabels(["Nom", "Chemin du binaire", "Arguments", "Port"])
         self.tv_apps.setSelectionBehavior(QTableView.SelectRows)
         self.tv_apps.setSelectionMode(QTableView.SingleSelection)
         self.tv_apps.setEditTriggers(QTableView.NoEditTriggers)
@@ -47,11 +48,13 @@ class Preferences_Dialog(QDialog, Ui_Dialog):
                 name_item = QStandardItem(app_name)
                 bin_item = QStandardItem(app_info["bin"])
                 args_item = QStandardItem(app_info["args"])
-                self.appsModel.appendRow([name_item, bin_item, args_item])
+                port_item = QStandardItem(app_info.get("port", ""))
+                self.appsModel.appendRow([name_item, bin_item, args_item, port_item])
         self.tv_apps.setModel(self.appsModel)
         self.tv_apps.verticalHeader().setVisible(False)
         self.tv_apps.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tv_apps.resizeColumnsToContents()
+        self.tv_apps.resizeRowsToContents()
         
         # Affichage de la liste des fichiers Keepass dans tv_kbdx
         self.kbdxModel = QStandardItemModel()
@@ -99,11 +102,13 @@ class Preferences_Dialog(QDialog, Ui_Dialog):
             name_item = QStandardItem(self.le_appsname.text())
             bin_item = QStandardItem(self.le_appspath.text())
             args_item = QStandardItem(self.le_appsargs.text())
-            self.appsModel.appendRow([name_item, bin_item, args_item])
+            port_item = QStandardItem(self.le_appsport.text())
+            self.appsModel.appendRow([name_item, bin_item, args_item, port_item])
             self.logger.warning(f"New app '{self.le_appsname.text()}' added.")
         self.le_appsname.clear()
         self.le_appspath.clear()
         self.le_appsargs.clear()
+        self.le_appsport.clear()
         self.save_preferences()
     
     def delApp(self):
@@ -188,18 +193,21 @@ class Preferences_Dialog(QDialog, Ui_Dialog):
             name = self.appsModel.item(index.row(), 0).text()
             bin = self.appsModel.item(index.row(), 1).text()
             args = self.appsModel.item(index.row(), 2).text()
+            port = self.appsModel.item(index.row(), 3).text() if self.appsModel.columnCount() > 3 else ""
             if self.previously_selected_app is None or self.previously_selected_app != index.row():
                 self.previously_selected_app = index.row()
                 
                 self.le_appsname.setText(name)
                 self.le_appspath.setText(bin)
                 self.le_appsargs.setText(args)
+                self.le_appsport.setText(port)
                 self.logger.info(f"Selected app: {name}")
             else:
                 self.tv_apps.selectionModel().clearSelection()
                 self.le_appsname.clear()
                 self.le_appspath.clear()
                 self.le_appsargs.clear()
+                self.le_appsport.clear()
                 self.logger.info(f"Deselected the currently selected app: {name}")
                 self.previously_selected_app = None
         else:
@@ -238,7 +246,8 @@ class Preferences_Dialog(QDialog, Ui_Dialog):
             name = self.appsModel.item(row, 0).text()
             bin = self.appsModel.item(row, 1).text()
             args = self.appsModel.item(row, 2).text()
-            apps_dict[name] = {"bin": bin, "args": args}
+            port = self.appsModel.item(row, 3).text() if self.appsModel.columnCount() > 3 else ""
+            apps_dict[name] = {"bin": bin, "args": args, "port": port}
         self.prefFiles["apps"] = apps_dict
         self.logger.debug(f"Saved apps: {list(apps_dict.keys())}")
         # Sauvegarde des fichiers KeePass

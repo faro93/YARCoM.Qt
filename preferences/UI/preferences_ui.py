@@ -24,7 +24,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(665, 390)
+        Dialog.resize(665, 396)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.tabWidget = QTabWidget(Dialog)
@@ -86,12 +86,22 @@ class Ui_Dialog(object):
         self.lb_appsargs = QLabel(self.groupBox_2)
         self.lb_appsargs.setObjectName(u"lb_appsargs")
 
-        self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.lb_appsargs)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.LabelRole, self.lb_appsargs)
 
         self.le_appsargs = QLineEdit(self.groupBox_2)
         self.le_appsargs.setObjectName(u"le_appsargs")
 
-        self.formLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.le_appsargs)
+        self.formLayout.setWidget(3, QFormLayout.ItemRole.FieldRole, self.le_appsargs)
+
+        self.lb_appsport = QLabel(self.groupBox_2)
+        self.lb_appsport.setObjectName(u"lb_appsport")
+
+        self.formLayout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.lb_appsport)
+
+        self.le_appsport = QLineEdit(self.groupBox_2)
+        self.le_appsport.setObjectName(u"le_appsport")
+
+        self.formLayout.setWidget(4, QFormLayout.ItemRole.FieldRole, self.le_appsport)
 
 
         self.verticalLayout_2.addLayout(self.formLayout)
@@ -212,6 +222,7 @@ class Ui_Dialog(object):
         self.lb_appspath.setText(QCoreApplication.translate("Dialog", u"Chemin", None))
         self.pb_appspath.setText(QCoreApplication.translate("Dialog", u"Rechercher", None))
         self.lb_appsargs.setText(QCoreApplication.translate("Dialog", u"Arguments", None))
+        self.lb_appsport.setText(QCoreApplication.translate("Dialog", u"Port", None))
         self.pb_appsadd.setText(QCoreApplication.translate("Dialog", u"Ajouter", None))
         self.pb_appsdel.setText(QCoreApplication.translate("Dialog", u"Supprimer", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Apps), QCoreApplication.translate("Dialog", u"Applications", None))

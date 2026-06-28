@@ -13,13 +13,12 @@ from main.UI.main_ui import Ui_MainWindow
 from kbdx.kbdx import KBDX_Dialog
 from preferences.preferences import Preferences_Dialog
 
-#TODO : dans on_twCnx_itemDoubleClicked
+#DONE : dans on_twCnx_itemDoubleClicked
 #DONE :     Parser les arguments de la ligne de commande
 #DONE :     Lancer la commande avec subprocess.Popen et gérer les erreurs
 #DONE :     Effacer les informations sensibles de la mémoire après le lancement de la commande
-#TODO :     Discriminer le compte dans la base KeePass avec le hostname et le user
-#TODO :     Isoler run_command dans une fonction à part pour pouvoir l'appeler depuis le menu contextuel avec juste la commande à lancer
-#TODO :     Ecrire une fonction pour générer les commandes à passer dans run_command (double clic ou menu contextuel)
+#DONE :     Isoler run_command dans une fonction à part pour pouvoir l'appeler depuis le menu contextuel avec juste la commande à lancer
+#DONE :     Ecrire une fonction pour générer les commandes à passer dans run_command (double clic ou menu contextuel)
 
 #DONE : Gérer le bouton "Ajouter une section" (ajout d'une branche dans l'arborescence)
 #DONE :     Qd item sélectionner, ajouter une sous-branche
@@ -29,9 +28,9 @@ from preferences.preferences import Preferences_Dialog
 #DONE :     Qd item sélectionner, ajouter une connexion dans la branche
 #DONE :     Qd rien sélectionner, ajouter une connexion au niveau racine
 
-#TODO : Gérér click droit pour lancer le menu contextuel
+#DONE : Gérér click droit pour lancer le menu contextuel
 #DONE :     Affichage des détails de l'item sélectionné
-#TODO :     Lancer les actions idoines
+#DONE :     Lancer les actions idoines
 
 #DONE : Gérer le bouton "Supprimer l'objet" (suppression d'une connexion ou de la branche sélectionnée)
 
@@ -44,32 +43,44 @@ from preferences.preferences import Preferences_Dialog
 #DONE :     sur une branche permet d'afficher la branche dans les détails pour édition
 #DONE :     désélectionne si déjà sélectionné
 
-#TODO : Gérer drag&drop dans l'arborescence
+#DONE : Gérer drag&drop dans l'arborescence
 #DONE :     debug dropEvent sous le dernier item d'une branche
 #DONE :     gérer évènnement dropEvent
 #DONE :     gérer modification dictionnaire
-#TODO :     sauvegarder les cnx dans cnx pour éviter de perdre les cnx déplacées
-#TODO :         self.yarcom.update_connexions_after_drop()
-#TODO :     gérer drops non autorisés :     autorisés :
-#TODO :         - branche dans feuille          - branche dans branche
-#TODO :         - feuille dans feuille          - feuille dans branche
+#DONE :     sauvegarder les cnx dans cnx pour éviter de perdre les cnx déplacées
+#DONE :         self.yarcom.update_connexions_after_drop()
+#DONE :     gérer drops non autorisés :     autorisés :
+#DONE :         - branche dans feuille          - branche dans branche
+#DONE :         - feuille dans feuille          - feuille dans branche
 #TODO :     cf. 2 dernières réponse du chat : https://chat.mistral.ai/chat/cd9846db-fbfe-41a0-9f32-0197247e7029
 #DONE :     gérer autres évènements :
 #DONE :         - dragEnterEvent
 #DONE :         - dragMoveEvent
 #DONE :         - dragLeaveEvent
 
+#TODO : Vérifier fonctionnement sur autre OS que Linux (Windows, macOS si possible)
+
 logging.basicConfig(
     level=logging.INFO,
     format = "%(asctime)s - %(filename)s.#%(lineno)d - %(funcName)s - %(levelname)s - %(message)s")
 
 class CustomQTreeWidgetItem(QTreeWidgetItem):
+    """Surcharge de QTreeWidgetItem pour ajouter des attributs itemType et itemCnx
+
+    Args:
+        QTreeWidgetItem : Classe de base pour les items de l'arborescence
+    """
     def __init__(self, name, itemType=None, itemCnx=None):
         super().__init__(name)
         self.itemType = itemType # "branche" ou "cnx" 
         self.itemCnx = itemCnx # None ou dict
 
 class CustomQTreeWidget(QTreeWidget):
+    """Surcharge de QTreeWidget pour ajouter des méthodes de gestion des évènements
+
+    Args:
+        QTreeWidget : Classe de base pour l'arborescence
+    """
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -88,7 +99,10 @@ class CustomQTreeWidget(QTreeWidget):
         self.targetItem = None
 
     def mouseMoveEvent(self, event):
-        """Gère l'événement de mouvement de la souris pour le drag&drop"""
+        """Gère l'événement de mouvement de la souris pour le drag&drop
+        Args:
+            event (QMouseEvent): Événement de mouvement de la souris
+        """
         # self.logger.info(f"event={event}")
         if event.buttons() == Qt.LeftButton and self.sourceItem is None:
             self.sourceItem = self.itemAt(event.position().toPoint())
@@ -99,12 +113,20 @@ class CustomQTreeWidget(QTreeWidget):
         super().mouseMoveEvent(event)
     
     def dragEnterEvent(self, event):
+        """Surcharge de la méthode de début de déplacement d'un item
+        Args:
+            event (QMouseEvent): Événement de mouvement de la souris
+        """
         # self.logger.info(f"event={event}")
         # self.sourceItem = self.itemAt(event.position().toPoint())
         self.logger.debug(f'sourceItem = {self.sourceItem.text(0) if self.sourceItem else None}, itemType = {self.sourceItem.itemType if self.sourceItem else None}')
         super().dragEnterEvent(event)
 
     def dragLeaveEvent(self, event):
+        """Surcharge de la méthode de fin de déplacement d'un item
+        Args:
+            event (QMouseEvent): Événement de mouvement de la souris
+        """
         # self.logger.info(f"event={event}")
         self.logger.debug(f"Drag&drop annulé, purge de self.sourceItem et self.targetItem en cours ...")
         self.sourceItem = None
@@ -114,6 +136,10 @@ class CustomQTreeWidget(QTreeWidget):
         super().dragLeaveEvent(event)
 
     def dragMoveEvent(self, event):
+        """Surcharge de la méthode de déplacement d'un item
+        Args:
+            event (QMouseEvent): Événement de mouvement de la souris
+        """
         # self.logger.info(f"event={event}")
         self.targetItem = self.itemAt(event.position().toPoint())
         if not self.targetItem:
@@ -144,7 +170,10 @@ class CustomQTreeWidget(QTreeWidget):
         super().dragMoveEvent(event)
 
     def dropEvent(self, event):
-        """Gère l'événement de drop pour déplacer un item"""
+        """Surcharge de la méthode de drop d'un item pour gérer le déplacement d'un item dans l'arborescence
+        Args:
+            event (QMouseEvent): Événement de drop
+        """
         # self.logger.info(f"event={event}")
         self.logger.debug(f"Déplacement de '{self.sourceItem.text(0)}' vers '{self.targetItem.text(0)}' en cours...")
         self.logger.debug(f"sourceItem.itemType='{self.sourceItem.itemType}', targetItem.itemType='{self.targetItem.itemType}'")
@@ -182,6 +211,11 @@ class CustomQTreeWidget(QTreeWidget):
         # self.yarcom.update_connexions_after_drop()
 
     def insert_item_above(self, target_item, source_item):
+        """Insère source_item au-dessus de target_item dans l'arborescence
+        Args:
+            target_item (QTreeWidgetItem): L'item cible au-dessus duquel insérer
+            source_item (QTreeWidgetItem): L'item à insérer
+        """
         target_parent = target_item.parent() or self.invisibleRootItem()
         target_row = target_parent.indexOfChild(target_item)
         source_parent = source_item.parent() or self.invisibleRootItem()
@@ -190,6 +224,11 @@ class CustomQTreeWidget(QTreeWidget):
         target_parent.insertChild(target_row, source_item)
 
     def insert_item_below(self, target_item, source_item):
+        """Insère source_item en dessous de target_item dans l'arborescence
+        Args:
+            target_item (QTreeWidgetItem): L'item cible en dessous duquel insérer
+            source_item (QTreeWidgetItem): L'item à insérer
+        """
         target_parent = target_item.parent() or self.invisibleRootItem()
         source_parent = source_item.parent() or self.invisibleRootItem()
         source_row = source_parent.indexOfChild(source_item)
@@ -284,6 +323,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
     #     return isCnx, thisItem
 
     def update_connexions_after_drop(self):
+        """Met à jour le dictionnaire des connexions après un déplacement d'item dans l'arborescence"""
         self.connexions.clear()
         self.topTreeWidgetItems_to_dict()
         # self.conf = self.reload_conf()
@@ -291,7 +331,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
     def show_context_menu(self, position):
         """Affiche le menu contextuel
-
         Args:
             position (QPoint): Position du curseur en pixels obtenue lors du signal.
         """
@@ -318,7 +357,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             app_name = action.text()
             self.logger.info(f"Lancement de l'application '{app_name}' pour la connexion '{item.text(0)}'")
             # Ici, ajouter le code pour lancer l'application avec les paramètres de la connexion
-            self.run_command(item)
+            self.run_command(item, app_name)
 
     def save_expansion_state(self):
         """Sauvegarde l'état d'expansion de l'arborescence"""
@@ -526,6 +565,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.write_to_file(self.conf, self.confFile)
 
     def clear_twCnx_fields(self):
+        """Désactive et efface les champs de modification de la connexion sélectionnée"""
         # Désactiver et effacer les champs de modification par défaut
         if self.le_IP is not None:
             self.le_IP.setEnabled(False)
@@ -565,23 +605,41 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
     #     return is_connexion, has_children
 
     def on_twCnx_itemDoubleClicked(self, item):
-        """Lance l'application par défaut de la connexion sélectionnée"""
-
+        """Lance l'application par défaut de la connexion sélectionnée
+        Args:
+            item (CustomQTreeWidgetItem): L'item double-cliqué dans l'arborescence
+        """
         # Vérifier si c'est une connexion
         if item.itemType == "branche":
             self.displayError("Sélectionnez une connexion valide.", auto_close=True)
             return
-        self.run_command(item)
+        self.run_command(item, "default")
         
-    def run_command(self, item):
-        # Récupérer l'app par défaut de la connexion
-        app_name = item.itemCnx.get("app", "")
+    def run_command(self, item, application="default"):
+        """Lance l'application par défaut de la connexion sélectionnée
+        Args:
+            item (CustomQTreeWidgetItem): L'item double-cliqué dans l'arborescence
+            application (str): L'application à exécuter :
+                "default" : lance l'application par défaut de la connexion
+                "custom" : lance l'application spécifiée dans le menu contextuel
+        """
+        if application == "default":
+            # Récupérer l'app par défaut de la connexion
+            app_name = item.itemCnx.get("app", "")
+        else:
+            # Récupérer l'app spécifiée dans le menu contextuel
+            app_name = application
+        
         app_conf = self.globalConf.get("apps", {}).get(app_name, {})
         app_bin = app_conf.get("bin", "")
         app_args = app_conf.get("args", "")
+        
         user = item.itemCnx.get("user", "")
         ip = item.itemCnx.get("ip", "")
-        port = item.itemCnx.get("port", "")
+        if application == "default":
+            port = item.itemCnx.get("port", "")
+        else:
+            port = app_conf.get("port", "")
         kbdx = item.itemCnx.get("kbdx", "")
 
         if not app_bin or not ip:
@@ -663,12 +721,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             self._toggle_item_recursive(item.child(j), expand)
 
     def on_search_enter(self):
-        """
-        Recherche et sélectionne les items correspondants à la recherche
-        
-        Args:
-            self
-        """
+        """Recherche et sélectionne les items correspondants à la recherche"""
         query = self.le_Search.text().strip().lower()
         if not query:
             self.search_results = []
@@ -801,6 +854,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.reload_tree(expansion_state)
 
     def topTreeWidgetItems_to_dict(self):
+        """Convertit les QTreeWidgetItem de niveau supérieur en dictionnaire"""
         for i in range(self.tw_Cnx.topLevelItemCount()):
             top_item = self.tw_Cnx.topLevelItem(i)
             self.logger.debug(f"{i}: {top_item.text(0)}")
@@ -811,6 +865,11 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                 self.connexions[top_item.text(0)] = top_item.itemCnx
 
     def childTreeWidgetItems_to_dict(self, item, current_dict_branch):
+        """Convertit les QTreeWidgetItem enfants en dictionnaire
+        Args:
+            item (QTreeWidgetItem): item parent
+            current_dict_branch (dict): dictionnaire de la branche courante
+        """
         for i in range(item.childCount()):
             child = item.child(i)
             self.logger.debug(f"{i}: {child.text(0)}")
@@ -821,6 +880,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                 current_dict_branch[child.text(0)] = child.itemCnx
 
     def reload_conf(self):
+        """Recharge la configuration à partir du fichier de configuration"""
         try:
             with open(self.confFile, "r", encoding="utf-8") as f:
                 conf = json.load(f)
@@ -831,6 +891,11 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         return conf
 
     def reload_tree(self, expansion_state):
+        """Recharge l'arborescence et restaure l'état d'expansion
+        Args:
+            expansion_state (dict): état d'expansion de l'arborescence
+        """
+        if self.connexions:
             # Recharger l'arborescence
             self.tw_Cnx.clear()
             self.populate_twCnx(self.connexions)
@@ -845,7 +910,11 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             self.clear_twCnx_fields()
 
     def write_to_file(self, conf, source_file):
-        """Écrit la configuration dans le fichier source"""
+        """Écrit la configuration dans le fichier source
+        Args:
+            conf (dict): configuration à écrire
+            source_file (str): chemin du fichier source
+        """
         new_conf = deepcopy(conf)
 
         if "kbdxFiles" in new_conf.get("global", {}):
@@ -1013,8 +1082,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                         self.populate_twCnx(v, item)
 
     def displayPreferenceDialog(self):
-        """Affiche la boîte de dialogue des préférences KeePass
-        """
+        """Affiche la boîte de dialogue des préférences KeePass"""
         if not hasattr(self, "prefForm"):
             # self.prefForm = Preferences_Dialog(self.globalConf, self.kbdxDialogAlreadyShown)
             self.prefForm = Preferences_Dialog(self.globalConf)
@@ -1033,6 +1101,8 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
     def displayPasswordDialog(self, kbdx_name=None):
         """Créé et affiche la boîte de dialogue de saisie des mots de passe KeePass
+        Args:
+            kbdx_name (str, optional): nom du coffre KeePass pour lequel le mot de passe doit être saisi. Si None, tous les coffres sont traités.
         """
         status_kbdxForm = None
         if self.kbdxPassword:
@@ -1087,7 +1157,13 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             self.logger.debug(f"self.conf = {json.dumps(self.conf, indent=4)}")
 
     def search_account_in_vault(self, vault, account_name):
-        """Recherche un compte dans la base KeePass spécifiée par vault"""
+        """Recherche un compte dans la base KeePass spécifiée par vault
+        Args:
+            vault (str): nom du coffre KeePass
+            account_name (str): nom du compte à rechercher
+        Returns:
+            dict: informations du compte si trouvé, sinon None
+        """
         kbdxFiles = self.globalConf.get("kbdxFiles", {})
         if vault not in kbdxFiles:
             self.logger.error(f"Coffre KeePass '{vault}' non trouvé.")
@@ -1102,10 +1178,8 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
     def readConfFile(self, confFile):
         """Lire le fichier de configuration
-
         Args:
             confFile (JSON file): fichier contenant les parties globales et de connexion
-
         Returns:
             dict: configuration
         """
@@ -1119,11 +1193,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             return None
 
     def parseConf(self):
-        """Analyse et modifie la configuration chargée
-
-        Args:
-            conf (dict): configuration chargée avec readConfFile()
-        """
+        """Analyse et modifie la configuration chargée"""
         # Vérifier les fichiers de base de données KeePass dbx, puis définir kdbxPassword sur True
         kbdxPasswords = dict()
         kbdxFiles = self.globalConf.get("kbdx", None)
