@@ -1,0 +1,74 @@
+{
+    "global": {
+        "apps": {
+            "SSH2": {
+                "bin": "/usr/bin/konsole -e",
+                "args": "/usr/bin/sshpass -p <password> /usr/bin/ssh -l <user> -p <port> <ip>",
+                "port": "22"
+            },
+            "FileZilla": {
+                "bin": "/usr/bin/filezilla",
+                "args": "sftp://<user>:<password>@<ip>",
+                "port": "22"
+            }
+        },
+        "files": [
+            "bla.json",
+            "ble.json"
+        ],
+        "kbdx": {
+            "pro": "/home/faro/Documents/KeePass.db/faro.pro.kdbx",
+            "perso": "/home/faro/Documents/KeePass.db/faro.perso.kdbx"
+        }
+    },
+    "connexions": {
+        "linux": {
+            "pepe.faro": {
+                "ip": "172.21.14.42",
+                "port": "22",
+                "app": "SSH2",
+                "kbdx": "pro",
+                "user": "faro"
+            }
+        },
+        "rpi": {
+            "jasper.faro": {
+                "ip": "172.21.14.33",
+                "port": "22",
+                "app": "SSH",
+                "kbdx": "perso",
+                "user": "faro"
+            },
+            "granny.faro": {
+                "ip": "172.21.14.31",
+                "port": "22",
+                "app": "SSH",
+                "kbdx": "pro",
+                "user": "faro"
+            },
+            "titi.faro": {
+                "ip": "172.21.14.34",
+                "port": "22",
+                "app": "SSH2",
+                "kbdx": "perso",
+                "user": "faro"
+            }
+        },
+        "others": {
+            "DataTank1.fadmin": {
+                "ip": "172.21.14.10",
+                "port": "22",
+                "app": "SSH2",
+                "kbdx": "perso",
+                "user": "fadmin"
+            },
+            "DataTank1.FileZilla": {
+                "ip": "172.21.14.10",
+                "port": "22",
+                "user": "fadmin",
+                "app": "FileZilla",
+                "kbdx": "perso"
+            }
+        }
+    }
+}
