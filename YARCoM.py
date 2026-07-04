@@ -63,6 +63,7 @@ from preferences.preferences import Preferences_Dialog
 #DONE : Vérifier la sauvegarde lors du déplacement d'items dans l'arborescence (drag&drop) et lors de l'ajout/suppression d'items dans l'arborescence --> update_connexions_after_drop
 
 #TODO : Ajouter icone aux fenêtres password et preferences
+#TODO : Modifier ou supprimer les menus (sauf à propos)
 
 logging.basicConfig(
     level=logging.INFO,
