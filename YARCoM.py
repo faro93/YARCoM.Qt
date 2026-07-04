@@ -59,6 +59,9 @@ from preferences.preferences import Preferences_Dialog
 #DONE :         - dragLeaveEvent
 
 #TODO : Vérifier fonctionnement sur autre OS que Linux (Windows, macOS si possible)
+#DONE : Vérifier la sauvegarde lors du déplacement d'items dans l'arborescence (drag&drop) et lors de l'ajout/suppression d'items dans l'arborescence --> update_connexions_after_drop
+
+#TODO : Ajouter icone aux fenêtres password et preferences
 
 logging.basicConfig(
     level=logging.INFO,
@@ -153,13 +156,12 @@ class CustomQTreeWidget(QTreeWidget):
             top_zone = target_rect.adjusted(0, 0, 0, -half_height)
             bottom_zone = target_rect.adjusted(0, half_height, 0, 0)
             current_pos = event.position().toPoint()
-            # self.logger.info(f"targetItem='{self.targetItem.text(0)}', target_rect={target_rect}, top_zone={top_zone}, bottom_zone={bottom_zone}, current_pos={current_pos}")
 
             if top_zone.contains(current_pos):
-                # self.logger.info(f"Drop autorisé au-dessus de '{self.targetItem.text(0)}'")
+                # self.logger.debug(f"Drop autorisé au-dessus de '{self.targetItem.text(0)}'")
                 event.accept()
             elif bottom_zone.contains(current_pos):
-                # self.logger.info(f"Drop autorisé en dessous de '{self.targetItem.text(0)}'")
+                # self.logger.debug(f"Drop autorisé en dessous de '{self.targetItem.text(0)}'")
                 event.accept()
             else:
                 self.logger.info(f"Drop interdit sur '{self.targetItem.text(0)}'")
@@ -208,7 +210,7 @@ class CustomQTreeWidget(QTreeWidget):
         self.targetItem = None
         self.logger.debug(f"Purge de sourceItem (='{self.sourceItem}'), targetItem (='{self.targetItem}').")
         self.logger.debug("Drop effectué.")
-        # self.yarcom.update_connexions_after_drop()
+        self.yarcom.update_connexions_after_drop()
 
     def insert_item_above(self, target_item, source_item):
         """Insère source_item au-dessus de target_item dans l'arborescence
@@ -314,20 +316,11 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         # Désactiver et effacer les champs de modification par défaut
         self.clear_twCnx_fields()
 
-    # def displayEvent(self, event):
-    #     # self.logger.info(f"event={event}\nevent.type={event.type()}\nevent.pos()={event.position().toPoint()}")
-    #     thisItem = self.tw_Cnx.itemAt(event.position().toPoint())
-    #     self.logger.info(f'thisItem is {thisItem.text(0)}, itemType = {thisItem.itemType}')
-    #     isCnx = True if thisItem.itemType == "cnx" else False
-    #     # del thisItem
-    #     return isCnx, thisItem
-
     def update_connexions_after_drop(self):
         """Met à jour le dictionnaire des connexions après un déplacement d'item dans l'arborescence"""
         self.connexions.clear()
         self.topTreeWidgetItems_to_dict()
-        # self.conf = self.reload_conf()
-        # self.write_to_file(self.conf, self.confFile)
+        self.write_to_file(self.conf, self.confFile)
 
     def show_context_menu(self, position):
         """Affiche le menu contextuel
@@ -454,7 +447,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         # Sauvegarder les modifications dans le fichier de configuration
         self.connexions.clear()
         self.topTreeWidgetItems_to_dict()
-        # self.conf = self.reload_conf()
         self.write_to_file(self.conf, self.confFile)
         self.reload_tree(expansion_state)
 
@@ -508,7 +500,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         # Sauvegarder les modifications dans le fichier de configuration
         self.connexions.clear()
         self.topTreeWidgetItems_to_dict()
-        # self.conf = self.reload_conf()
         self.write_to_file(self.conf, self.confFile)
 
     def on_pb_TreeAddSection_clicked(self):
@@ -566,7 +557,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
     def clear_twCnx_fields(self):
         """Désactive et efface les champs de modification de la connexion sélectionnée"""
-        # Désactiver et effacer les champs de modification par défaut
         if self.le_IP is not None:
             self.le_IP.setEnabled(False)
             self.le_IP.clear()
@@ -582,27 +572,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         # Désactiver le bouton de sauvegarde par défaut
         if self.pb_ModifyCnx is not None:
             self.pb_ModifyCnx.setEnabled(False)
-
-    # def is_connexion_has_children(self, data):
-    #     """Vérifie si une connexion a des enfants (sous-connexions)"""
-    #     connexion_keys = {"ip", "port", "user", "app", "kbdx"}
-    #     if connexion_keys.issubset(data.keys()):
-    #         # self.logger.debug("C'est une connexion")
-    #         is_connexion = True
-    #         has_children = False
-    #     else:
-    #         has_children = any(isinstance(v, dict) for v in data.values())
-    #         if has_children:
-    #             # self.logger.debug(f"C'est un groupe de connexions")
-    #             is_connexion = False
-    #             has_children = True
-    #         else:
-    #             # self.logger.debug("Ce n'est ni une connexion ni un groupe de connexions")
-    #             is_connexion = False
-    #             has_children = False
-
-    #     self.logger.debug(f"{list(data.keys())[0]} : is_connexion = {is_connexion}, has_children = {has_children}")
-    #     return is_connexion, has_children
 
     def on_twCnx_itemDoubleClicked(self, item):
         """Lance l'application par défaut de la connexion sélectionnée
@@ -676,8 +645,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
         self.logger.debug(f"Lancement de : {cmdStringProtected}")
         account_info.clear()  # Effacer les informations sensibles de la mémoire
-
-
+        ##################################################################################
         # if sys.platform.startswith('win'):
         #     # Sous Windows, utiliser shell=True pour permettre l'expansion des variables d'environnement et l'exécution de commandes internes
         #     shell = False
@@ -687,6 +655,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         #     if "ssh" in app_bin.lower() or "ssh" in app_args.lower():
         #         # Si l'application est SSH, utiliser shell=True pour permettre l'expansion des variables d'environnement et l'exécution de commandes internes
         #         shell = True
+        ##################################################################################
 
         try:
             subprocess.Popen(cmd, shell=False)
@@ -849,7 +818,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
         self.connexions.clear()
         self.topTreeWidgetItems_to_dict()
-        # self.conf = self.reload_conf()
         self.write_to_file(self.conf, self.confFile)
         self.reload_tree(expansion_state)
 
@@ -954,17 +922,13 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             self.selected_item = item  # Mettre à jour l'item sélectionné
             self.logger.debug(f"Sélection de l'item '{item.text(0)}'")
             # Plier/Déplier l'item si c'est une branche
-            # if not is_connexion and has_children:
-                # item.setExpanded(not item.isExpanded())
             if item.itemType == "branche":
                 item.setExpanded(True)
-                # item.setExpanded(not item.isExpanded())
 
         if item.itemType == "branche":
             self.display_item(item)
             return
         elif item.itemType == "cnx":
-            # self.display_connexion(path, data)
             self.display_item(item)
 
     def display_item(self, item):
@@ -1061,7 +1025,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         Args:
             data (dict): données de connexions du fichier de configuration
         """
-        # self.logger.debug(f"data={data}, parent={parent}")
+        self.logger.debug(f"data={data}, parent={parent}")
         connexion_keys = {"ip", "port", "user", "app", "kbdx"}
 
         if parent is None:
@@ -1084,14 +1048,12 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
     def displayPreferenceDialog(self):
         """Affiche la boîte de dialogue des préférences KeePass"""
         if not hasattr(self, "prefForm"):
-            # self.prefForm = Preferences_Dialog(self.globalConf, self.kbdxDialogAlreadyShown)
             self.prefForm = Preferences_Dialog(self.globalConf)
         self.prefForm.setWindowTitle("Préférences")
         self.prefForm.setWindowFlags(Qt.Dialog | Qt.WindowTitleHint | Qt.WindowStaysOnTopHint)
         self.prefForm.setModal(True)
         self.logger.debug(f"self.conf = {json.dumps(self.conf, indent=4)}")
         self.prefForm.exec()
-        # prefs_modified = self.prefForm.prefs_modified
         if self.prefForm.prefs_modified:
             self.logger.debug("Modifications des préférences sauvegardées.")
             self.logger.debug(f"self.new_conf = {json.dumps(self.conf, indent=4)}")
