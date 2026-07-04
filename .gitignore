@@ -24,6 +24,8 @@
 /tuto.souris.py
 /.venv
 /.vscode
+/yarcom.qt.conf.json
+/yarcom.qt.conf.orig.json.bak
 /20251114.0932.YARCoM.py.avec.drag.n.drop.py
 /20251207.2044.YARCoM.py.avec.drag.n.drop.pas.terminé.py
 /20251207.2106.YARCoM.py.sans.drag.n.drop.py
