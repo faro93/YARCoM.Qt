@@ -159,16 +159,16 @@ class CustomQTreeWidget(QTreeWidget):
             current_pos = event.position().toPoint()
 
             if top_zone.contains(current_pos):
-                # self.logger.debug(f"Drop autorisé au-dessus de '{self.targetItem.text(0)}'")
+                self.logger.debug(f"Drop autorisé au-dessus de '{self.targetItem.text(0)}'")
                 event.accept()
             elif bottom_zone.contains(current_pos):
-                # self.logger.debug(f"Drop autorisé en dessous de '{self.targetItem.text(0)}'")
+                self.logger.debug(f"Drop autorisé en dessous de '{self.targetItem.text(0)}'")
                 event.accept()
             else:
-                self.logger.info(f"Drop interdit sur '{self.targetItem.text(0)}'")
+                self.logger.debug(f"Drop interdit sur '{self.targetItem.text(0)}'")
                 event.ignore()
         else:
-            self.logger.info(f"Drop autorisé sur '{self.targetItem.text(0)}'")
+            self.logger.debug(f"Drop autorisé sur '{self.targetItem.text(0)}'")
             event.accept()
         super().dragMoveEvent(event)
 
@@ -349,7 +349,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         action = menu.exec(self.tw_Cnx.viewport().mapToGlobal(position))
         if action in apps_list:
             app_name = action.text()
-            self.logger.info(f"Lancement de l'application '{app_name}' pour la connexion '{item.text(0)}'")
+            self.logger.debug(f"Lancement de l'application '{app_name}' pour la connexion '{item.text(0)}'")
             # Ici, ajouter le code pour lancer l'application avec les paramètres de la connexion
             self.run_command(item, app_name)
 
