@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="main">
+    <file>YARCoM.icon.340x225.png</file>
+    <file>YARCoM.icon.png</file>
+    <file>YARCoM.by.faro.png</file>
+    <file>YARCoM.by.faro340x233.png</file>
     <file>prefs.png</file>
     <file>YARCoM.png</file>
     <file>edit.png</file>

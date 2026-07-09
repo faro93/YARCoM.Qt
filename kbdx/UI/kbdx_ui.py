@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'kbdx.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QFormLayout, QGridLayout,
     QGroupBox, QHBoxLayout, QPushButton, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
+import icons_rc
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -29,6 +30,9 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
         Dialog.setSizePolicy(sizePolicy)
+        icon = QIcon()
+        icon.addFile(u":/main/YARCoM.icon.340x225.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        Dialog.setWindowIcon(icon)
         self.verticalLayout_2 = QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.gridLayout = QGridLayout()

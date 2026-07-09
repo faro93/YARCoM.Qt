@@ -62,8 +62,9 @@ from preferences.preferences import Preferences_Dialog
 #TODO : Vérifier fonctionnement sur autre OS que Linux (Windows, macOS si possible)
 #DONE : Vérifier la sauvegarde lors du déplacement d'items dans l'arborescence (drag&drop) et lors de l'ajout/suppression d'items dans l'arborescence --> update_connexions_after_drop
 
-#TODO : Ajouter icone aux fenêtres password et preferences
-#TODO : Modifier ou supprimer les menus (sauf à propos)
+#DONE : Ajouter icone aux fenêtres password et preferences
+#DONE : Modifier ou supprimer les menus (sauf à propos)
+#TODO : Créer une fenêtre "à propos" avec les infos de version, auteur, date, licence, icone, etc.
 
 logging.basicConfig(
     level=logging.INFO,

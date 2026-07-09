@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -18,9 +18,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QGridLayout,
     QGroupBox, QHBoxLayout, QLabel, QLineEdit,
-    QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QSpacerItem, QStatusBar, QVBoxLayout,
-    QWidget)
+    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
+    QSpacerItem, QStatusBar, QVBoxLayout, QWidget)
 import icons_rc
 
 class Ui_MainWindow(object):
@@ -31,7 +30,7 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QSize(180, 600))
         MainWindow.setMaximumSize(QSize(320, 16777215))
         icon = QIcon()
-        icon.addFile(u":/main/YARCoM.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u":/main/YARCoM.icon.340x225.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         self.actionOpen = QAction(MainWindow)
         self.actionOpen.setObjectName(u"actionOpen")
@@ -264,26 +263,10 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName(u"menubar")
         self.menubar.setEnabled(True)
         self.menubar.setGeometry(QRect(0, 0, 320, 22))
-        self.m_File = QMenu(self.menubar)
-        self.m_File.setObjectName(u"m_File")
-        self.m_Help = QMenu(self.menubar)
-        self.m_Help.setObjectName(u"m_Help")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
-        self.menubar.addAction(self.m_File.menuAction())
-        self.menubar.addAction(self.m_Help.menuAction())
-        self.m_File.addAction(self.actionOpen)
-        self.m_File.addAction(self.action_Save)
-        self.m_File.addAction(self.actionSave_as)
-        self.m_File.addAction(self.action_Close)
-        self.m_File.addSeparator()
-        self.m_File.addAction(self.action_Preferences)
-        self.m_File.addSeparator()
-        self.m_File.addAction(self.action_Quit)
-        self.m_Help.addAction(self.actionAbout)
 
         self.retranslateUi(MainWindow)
 
@@ -335,7 +318,5 @@ class Ui_MainWindow(object):
         self.pb_ModifyCnx.setToolTip(QCoreApplication.translate("MainWindow", u"Modifier la connexion", None))
 #endif // QT_CONFIG(tooltip)
         self.pb_ModifyCnx.setText("")
-        self.m_File.setTitle(QCoreApplication.translate("MainWindow", u"Fichier", None))
-        self.m_Help.setTitle(QCoreApplication.translate("MainWindow", u"Aide", None))
     # retranslateUi
 

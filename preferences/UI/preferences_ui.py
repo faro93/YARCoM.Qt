@@ -19,12 +19,16 @@ from PySide6.QtWidgets import (QApplication, QDialog, QFormLayout, QGroupBox,
     QHBoxLayout, QHeaderView, QLabel, QLineEdit,
     QPushButton, QSizePolicy, QTabWidget, QTableView,
     QVBoxLayout, QWidget)
+import icons_rc
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(665, 396)
+        icon = QIcon()
+        icon.addFile(u":/main/YARCoM.icon.340x225.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        Dialog.setWindowIcon(icon)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.tabWidget = QTabWidget(Dialog)

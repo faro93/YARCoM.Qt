@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons/icons.qrc">
-    <normaloff>:/main/YARCoM.png</normaloff>:/main/YARCoM.png</iconset>
+    <normaloff>:/main/YARCoM.icon.340x225.png</normaloff>:/main/YARCoM.icon.340x225.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="enabled">
@@ -404,27 +404,6 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="m_File">
-    <property name="title">
-     <string>Fichier</string>
-    </property>
-    <addaction name="actionOpen"/>
-    <addaction name="action_Save"/>
-    <addaction name="actionSave_as"/>
-    <addaction name="action_Close"/>
-    <addaction name="separator"/>
-    <addaction name="action_Preferences"/>
-    <addaction name="separator"/>
-    <addaction name="action_Quit"/>
-   </widget>
-   <widget class="QMenu" name="m_Help">
-    <property name="title">
-     <string>Aide</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
-   <addaction name="m_File"/>
-   <addaction name="m_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
