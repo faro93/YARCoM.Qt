@@ -1,5 +1,4 @@
-# **YARCoM**
-Alt-H1 bla
+**YARCoM**
 ==========
 
 This acronym stands for **Y**et **A**nother **R**emote **Co**nnexion **M**anager.
