@@ -84,6 +84,7 @@ Run **YARCoM.py** :
 **N.B. :** _shebang script is configured with_ `#!/usr/bin/env python3`_, so it will run with your_ `venv` _installed python._
 
 ## Contributing
+Me &#x1f601;
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
