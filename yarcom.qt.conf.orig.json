@@ -12,10 +12,6 @@
                 "port": "22"
             }
         },
-        "files": [
-            "bla.json",
-            "ble.json"
-        ],
         "kbdx": {
             "pro": "/home/faro/Documents/KeePass.db/faro.pro.kdbx",
             "perso": "/home/faro/Documents/KeePass.db/faro.perso.kdbx"
