@@ -1,4 +1,5 @@
 #YARCoM
+
 This acronym stands for **Y**et **A**nother **R**emote **Co**nnexion **M**anager.
 
 It manages a list of remote devices to connect to using your favorite connection tool you prefer (sss on Linux, PuTTY on MS OS, etc.).
