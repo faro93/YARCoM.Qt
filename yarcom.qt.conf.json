@@ -43,7 +43,7 @@
                 "user": "faro"
             },
             "titi.faro": {
-                "ip": "1.2.3.32",
+                "ip": "1.2.3.38",
                 "port": "22",
                 "app": "SSH2",
                 "kbdx": "perso",

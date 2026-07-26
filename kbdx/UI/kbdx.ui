@@ -20,8 +20,8 @@
    <string>Dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../icons/icons.qrc">
-    <normaloff>:/main/YARCoM.icon.340x225.png</normaloff>:/main/YARCoM.icon.340x225.png</iconset>
+   <iconset resource="../../Ressources.qrc">
+    <normaloff>:/main/icons/YARCoM.icon.340x225.png</normaloff>:/main/icons/YARCoM.icon.340x225.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -74,7 +74,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../icons/icons.qrc"/>
+  <include location="../../Ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

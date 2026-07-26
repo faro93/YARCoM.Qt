@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QFormLayout, QGridLayout,
     QGroupBox, QHBoxLayout, QPushButton, QSizePolicy,
     QSpacerItem, QVBoxLayout, QWidget)
-import icons_rc
+import Ressources_rc
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -31,7 +31,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
         Dialog.setSizePolicy(sizePolicy)
         icon = QIcon()
-        icon.addFile(u":/main/YARCoM.icon.340x225.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u":/main/icons/YARCoM.icon.340x225.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         Dialog.setWindowIcon(icon)
         self.verticalLayout_2 = QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")

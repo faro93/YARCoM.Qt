@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="main">
+    <file>icons/add_computer.png</file>
+    <file>icons/add_folder.png</file>
+    <file>icons/edit.png</file>
+    <file>icons/prefs.png</file>
+    <file>icons/trash.png</file>
+    <file>icons/YARCoM.by.faro.png</file>
+    <file>icons/YARCoM.by.faro340x233.png</file>
+    <file>icons/YARCoM.icon.340x225.png</file>
+    <file>icons/YARCoM.icon.png</file>
+  </qresource>
+</RCC>

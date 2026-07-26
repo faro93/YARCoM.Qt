@@ -26,8 +26,8 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../icons/icons.qrc">
-    <normaloff>:/main/YARCoM.icon.340x225.png</normaloff>:/main/YARCoM.icon.340x225.png</iconset>
+   <iconset resource="../../Ressources.qrc">
+    <normaloff>:/main/icons/YARCoM.icon.340x225.png</normaloff>:/main/icons/YARCoM.icon.340x225.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="enabled">
@@ -73,8 +73,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../icons/icons.qrc">
-             <normaloff>:/main/add_folder.png</normaloff>:/main/add_folder.png</iconset>
+            <iconset resource="../../Ressources.qrc">
+             <normaloff>:/main/icons/add_folder.png</normaloff>:/main/icons/add_folder.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -106,8 +106,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../icons/icons.qrc">
-             <normaloff>:/main/add_computer.png</normaloff>:/main/add_computer.png</iconset>
+            <iconset resource="../../Ressources.qrc">
+             <normaloff>:/main/icons/add_computer.png</normaloff>:/main/icons/add_computer.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -142,8 +142,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../icons/icons.qrc">
-             <normaloff>:/main/trash.png</normaloff>:/main/trash.png</iconset>
+            <iconset resource="../../Ressources.qrc">
+             <normaloff>:/main/icons/trash.png</normaloff>:/main/icons/trash.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -175,8 +175,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../icons/icons.qrc">
-             <normaloff>:/main/prefs.png</normaloff>:/main/prefs.png</iconset>
+            <iconset resource="../../Ressources.qrc">
+             <normaloff>:/main/icons/prefs.png</normaloff>:/main/icons/prefs.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -361,8 +361,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../icons/icons.qrc">
-             <normaloff>:/main/edit.png</normaloff>:/main/edit.png</iconset>
+            <iconset resource="../../Ressources.qrc">
+             <normaloff>:/main/icons/edit.png</normaloff>:/main/icons/edit.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -452,7 +452,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../../icons/icons.qrc"/>
+  <include location="../../Ressources.qrc"/>
  </resources>
  <connections/>
 </ui>

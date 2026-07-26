@@ -4,6 +4,7 @@
 /faro.pro.test.kdbx
 /.git
 /.gitignore
+/icons/archives
 /PréProduction.json
 /__pycache__
 /PySide6.env.py

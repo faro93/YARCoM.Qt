@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QGridLayout
     QGroupBox, QHBoxLayout, QLabel, QLineEdit,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
     QSpacerItem, QStatusBar, QVBoxLayout, QWidget)
-import icons_rc
+import Ressources_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QSize(180, 600))
         MainWindow.setMaximumSize(QSize(320, 16777215))
         icon = QIcon()
-        icon.addFile(u":/main/YARCoM.icon.340x225.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u":/main/icons/YARCoM.icon.340x225.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         self.actionOpen = QAction(MainWindow)
         self.actionOpen.setObjectName(u"actionOpen")
@@ -68,7 +68,7 @@ class Ui_MainWindow(object):
         self.pb_TreeAddSection = QPushButton(self.gb_Tree)
         self.pb_TreeAddSection.setObjectName(u"pb_TreeAddSection")
         icon1 = QIcon()
-        icon1.addFile(u":/main/add_folder.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon1.addFile(u":/main/icons/add_folder.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pb_TreeAddSection.setIcon(icon1)
         self.pb_TreeAddSection.setIconSize(QSize(32, 32))
 
@@ -81,7 +81,7 @@ class Ui_MainWindow(object):
         self.pb_TreeAddCnx = QPushButton(self.gb_Tree)
         self.pb_TreeAddCnx.setObjectName(u"pb_TreeAddCnx")
         icon2 = QIcon()
-        icon2.addFile(u":/main/add_computer.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon2.addFile(u":/main/icons/add_computer.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pb_TreeAddCnx.setIcon(icon2)
         self.pb_TreeAddCnx.setIconSize(QSize(32, 32))
 
@@ -94,7 +94,7 @@ class Ui_MainWindow(object):
         self.pb_TreeDelete = QPushButton(self.gb_Tree)
         self.pb_TreeDelete.setObjectName(u"pb_TreeDelete")
         icon3 = QIcon()
-        icon3.addFile(u":/main/trash.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon3.addFile(u":/main/icons/trash.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pb_TreeDelete.setIcon(icon3)
         self.pb_TreeDelete.setIconSize(QSize(32, 32))
 
@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
         self.pb_Preferences = QPushButton(self.gb_Tree)
         self.pb_Preferences.setObjectName(u"pb_Preferences")
         icon4 = QIcon()
-        icon4.addFile(u":/main/prefs.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon4.addFile(u":/main/icons/prefs.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pb_Preferences.setIcon(icon4)
         self.pb_Preferences.setIconSize(QSize(32, 32))
 
@@ -242,7 +242,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.pb_ModifyCnx.sizePolicy().hasHeightForWidth())
         self.pb_ModifyCnx.setSizePolicy(sizePolicy)
         icon5 = QIcon()
-        icon5.addFile(u":/main/edit.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon5.addFile(u":/main/icons/edit.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.pb_ModifyCnx.setIcon(icon5)
         self.pb_ModifyCnx.setIconSize(QSize(32, 32))
 
