@@ -14,56 +14,12 @@ from main.UI.main_ui import Ui_MainWindow
 from kbdx.kbdx import KBDX_Dialog
 from preferences.preferences import Preferences_Dialog
 
-#DONE : dans on_twCnx_itemDoubleClicked
-#DONE :     Parser les arguments de la ligne de commande
-#DONE :     Lancer la commande avec subprocess.Popen et gérer les erreurs
-#DONE :     Effacer les informations sensibles de la mémoire après le lancement de la commande
-#DONE :     Isoler run_command dans une fonction à part pour pouvoir l'appeler depuis le menu contextuel avec juste la commande à lancer
-#DONE :     Ecrire une fonction pour générer les commandes à passer dans run_command (double clic ou menu contextuel)
-
-#DONE : Gérer le bouton "Ajouter une section" (ajout d'une branche dans l'arborescence)
-#DONE :     Qd item sélectionner, ajouter une sous-branche
-#DONE :     Qd rien sélectionner, ajouter une branche au niveau racine
-
-#DONE : Gérer le bouton "Ajouter une connexion" (ajout d'une connexion dans l'arborescence)
-#DONE :     Qd item sélectionner, ajouter une connexion dans la branche
-#DONE :     Qd rien sélectionner, ajouter une connexion au niveau racine
-
-#DONE : Gérér click droit pour lancer le menu contextuel
-#DONE :     Affichage des détails de l'item sélectionné
-#DONE :     Lancer les actions idoines
-
-#DONE : Gérer le bouton "Supprimer l'objet" (suppression d'une connexion ou de la branche sélectionnée)
-
 #TODO : [Gérer la touche "ENTREE" pour valider les modifications dans les champs]
 
 #TODO : Gérer le fichier de configuration utilisateur (dans le home, ~/.yarcom.qt.conf.json)
 
-#DONE : dans on_twCnx_itemClicked
-#DONE :     déplacer un item dans l'arborescence par glisser-déposer
-#DONE :     sur une branche permet d'afficher la branche dans les détails pour édition
-#DONE :     désélectionne si déjà sélectionné
-
-#DONE : Gérer drag&drop dans l'arborescence
-#DONE :     debug dropEvent sous le dernier item d'une branche
-#DONE :     gérer évènnement dropEvent
-#DONE :     gérer modification dictionnaire
-#DONE :     sauvegarder les cnx dans cnx pour éviter de perdre les cnx déplacées
-#DONE :         self.yarcom.update_connexions_after_drop()
-#DONE :     gérer drops non autorisés :     autorisés :
-#DONE :         - branche dans feuille          - branche dans branche
-#DONE :         - feuille dans feuille          - feuille dans branche
-#TODO :     cf. 2 dernières réponse du chat : https://chat.mistral.ai/chat/cd9846db-fbfe-41a0-9f32-0197247e7029
-#DONE :     gérer autres évènements :
-#DONE :         - dragEnterEvent
-#DONE :         - dragMoveEvent
-#DONE :         - dragLeaveEvent
-
 #TODO : Vérifier fonctionnement sur autre OS que Linux (Windows, macOS si possible)
-#DONE : Vérifier la sauvegarde lors du déplacement d'items dans l'arborescence (drag&drop) et lors de l'ajout/suppression d'items dans l'arborescence --> update_connexions_after_drop
 
-#DONE : Ajouter icone aux fenêtres password et preferences
-#DONE : Modifier ou supprimer les menus (sauf à propos)
 #TODO : Créer une fenêtre "à propos" avec les infos de version, auteur, date, licence, icone, etc.
 
 logging.basicConfig(
@@ -255,7 +211,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.version = "0.1"
         self.version_string = "2024/11/13"
         self.author = "faro"
-        self.confFile = "yarcom.qt.conf.orig.json"
+        self.confFile = "yarcom.qt.conf.json"
         self.kbdxPassword = False
         self.passwordCiphered = False
         self.kbdxDialogAlreadyShown = False

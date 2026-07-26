@@ -1,10 +1,33 @@
 <h1>YARCoM</h1>
 <div align="center">
-    <img src="icons/YARCoM.by.faro340x233.png" alt="YARCoM" width="100%">  
+    <img src="icons/YARCoM.by.faro340x233.png" alt="YARCoM" width="100%">
 </div>
 This tool manages a list of remote devices to connect to using your favorite connection tool (ssh on Linux, PuTTY on MS OS, etc.).
 <br>This tool is developped using Python and Qt pyside6 library. You can find the same tool using TCL/Tk, but less advanced, in another directory in my repository.  
 <br>A keepass vault can be associated to retrieve passwords automatically.
+
+<h2>Screenshots</h2>
+<ol>
+<ul><li>Main window<br>
+        <img src="images/screenshot.main.window.png" alt="YARCoM" width="50%">
+    </li>
+    <li>Preferences windows</li>
+    <ul>
+        <li>Application declarations<br>
+            <img src="images/screenshot.preferences.apps.window.png" alt="YARCoM" width="70%">
+        </li>
+        <li>KeePass vault declarations<br>
+            <img src="images/screenshot.preferences.vaults.window.png" alt="YARCoM" width="70%">
+        </li>
+    </ul>
+    <li>Vault password entry window<br>
+        <img src="images/screenshot.require.password.window.png" alt="YARCoM" width="60%">
+    </li>
+</ul>
+
+
+
+</ol>
 
 <h2>Features</h2>
 <ol><li>Only one configuration file (.json) describing the setup :</li>

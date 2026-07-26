@@ -221,7 +221,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
         self.groupBox.setTitle(QCoreApplication.translate("Dialog", u"Liste des applications", None))
-        self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"Nouvelle application", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"D\u00e9tails de l'application", None))
         self.lb_appsname.setText(QCoreApplication.translate("Dialog", u"Nom", None))
         self.lb_appspath.setText(QCoreApplication.translate("Dialog", u"Chemin", None))
         self.pb_appspath.setText(QCoreApplication.translate("Dialog", u"Rechercher", None))
@@ -231,7 +231,7 @@ class Ui_Dialog(object):
         self.pb_appsdel.setText(QCoreApplication.translate("Dialog", u"Supprimer", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_Apps), QCoreApplication.translate("Dialog", u"Applications", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("Dialog", u"Liste des coffre-forts KeePass", None))
-        self.groupBox_4.setTitle(QCoreApplication.translate("Dialog", u"Nouveau coffre-fort", None))
+        self.groupBox_4.setTitle(QCoreApplication.translate("Dialog", u"D\u00e9tails du coffre-fort", None))
         self.lb_kbdxname.setText(QCoreApplication.translate("Dialog", u"Nom", None))
         self.lb_kbdxpath.setText(QCoreApplication.translate("Dialog", u"Chemin", None))
         self.pb_kbdxpath.setText(QCoreApplication.translate("Dialog", u"Rechercher", None))
