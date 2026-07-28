@@ -100,22 +100,15 @@ $ pip install -r requirements.txt
 
 ## Usage
 Run **YARCoM.py** :
-<li>
-    <ul>
-        For Windows :     
+* For Windows :     
 ```
 python.exe .\YARCoM.py
 ```
-    </ul>
-    <ul>
-        For Linux and MacOS (I guess) :
+* For Linux and MacOS (I guess) :
 ```
 ./YARCoM.py
 ```
         **N.B. :** _shebang script is configured with_ `#!/usr/bin/env python3`_, so it will run with your_ `venv` _installed python._
-    </ul>
-</li>
-
 
 ## Contributing
 Me &#x1f601;
