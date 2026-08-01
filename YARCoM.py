@@ -1009,7 +1009,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         if not hasattr(self, "prefForm"):
             self.prefForm = Preferences_Dialog(self.globalConf)
         self.prefForm.setWindowTitle("Préférences")
-        self.prefForm.setWindowFlags(Qt.Dialog | Qt.WindowTitleHint | Qt.WindowStaysOnTopHint)
+        self.prefForm.setWindowFlags(Qt.Dialog | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowStaysOnTopHint)
         self.prefForm.setModal(True)
         self.logger.debug(f"self.conf = {json.dumps(self.conf, indent=4)}")
         self.prefForm.exec()
@@ -1040,7 +1040,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             else:
                 self.kbdxForm.updateKbdxFiles(kbdxFiles)
             self.kbdxForm.setWindowTitle(kbdxTitle)
-            self.kbdxForm.setWindowFlags(Qt.Dialog | Qt.WindowTitleHint | Qt.WindowStaysOnTopHint)
+            self.kbdxForm.setWindowFlags(Qt.Dialog | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowStaysOnTopHint)
             self.kbdxForm.groupBox.setTitle(gbTitle)
 
             self.logger.debug(f"self.kbdxDialogAlreadyShown = {self.kbdxDialogAlreadyShown}")
