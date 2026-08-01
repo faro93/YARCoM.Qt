@@ -208,8 +208,8 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.logger = logging.getLogger(self.__class__.__name__)
 
         # Variables diverses
-        self.version = "0.1"
-        self.version_string = "2024/11/13"
+        self.version = "1.0"
+        self.version_string = "2026/08/01"
         self.author = "faro"
         self.confFile = "yarcom.qt.conf.json"
         self.kbdxPassword = False
@@ -1111,6 +1111,10 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             return conf
         except (FileNotFoundError, json.JSONDecodeError) as e:
             self.logger.error(f"Erreur : {e}")
+            f = open(confFile, "w", encoding="utf-8")
+            f.write(json.dumps({"global": {"apps": {}, "kbdx":{}}, "connexions": {}}, indent=4))
+            f.close()
+            self.logger.debug(f"Fichier de configuration '{confFile}' créé avec succès.")
             return None
 
     def parseConf(self):
