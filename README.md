@@ -117,7 +117,8 @@ python.exe .\YARCoM.py
 * Give a name to the vault
 * Enter its path
 
-[!NOTE] Configuration is saved when the window is closed.
+> [!NOTE]
+> Configuration is saved when the window is closed.
 
 ## Contributing
 Me &#x1f601;
