@@ -1,80 +1,55 @@
-<h1>YARCoM</h1>
-<div align="center">
-    <img src="icons/YARCoM.by.faro340x233.png" alt="YARCoM" width="100%">
-</div>
+# YARCoM
+<p align="center">
+    <img width="100%" src="icons/YARCoM.by.faro340x233.png" alt="YARCoM logo featuring the application name in stylized text with a professional design aesthetic"> 
+</p>
 This tool manages a list of remote devices to connect to using your favorite connection tool (ssh on Linux, PuTTY on MS OS, etc.).
-<br>This tool is developped using Python and Qt pyside6 library. You can find the same tool using TCL/Tk, but less advanced, in another directory in my repository.  
-<br>A keepass vault can be associated to retrieve passwords automatically.
 
-<h2>Screenshots</h2>
-<ol>
-<ul><li>Main window<br>
-        <img src="images/screenshot.main.window.png" alt="YARCoM" width="50%">
-    </li>
-    <li>Preferences windows</li>
-    <ul>
-        <li>Application declarations<br>
-            <img src="images/screenshot.preferences.apps.window.png" alt="YARCoM" width="70%">
-        </li>
-        <li>KeePass vault declarations<br>
-            <img src="images/screenshot.preferences.vaults.window.png" alt="YARCoM" width="70%">
-        </li>
-    </ul>
-    <li>Vault password entry window<br>
-        <img src="images/screenshot.require.password.window.png" alt="YARCoM" width="60%">
-    </li>
-</ul>
+This tool is developped using Python and Qt pyside6 library. You can find the same tool using TCL/Tk, but less advanced, in another directory in my repository.  
 
+A keepass vault can be associated to retrieve passwords automatically.
 
+## Screenshots
+### Window types
+* Main
+    <p align="left">
+        <img src="images/screenshot.main.window.png" alt="YARCoM's main window" width="50%">
+    </p>
+* Preferences
+    * Applications declaration
+        <p align="left">
+            <img src="images/screenshot.preferences.apps.window.png" alt="YARCoM's prefs window in apps tab" width="70%">
+        </p>
+    * Keepass vaults declaration
+        <p align="left">
+            <img src="images/screenshot.preferences.vaults.window.png" alt="YARCoM's prefs window in vaults tab" width="70%">
+        </p>
+* Vault password entry
+    <p align="left">
+        <img src="images/screenshot.require.password.window.png" alt="YARCoM's vault password entry window" width="60%">
+    </p>
 
-</ol>
-
-<h2>Features</h2>
-<ol><li>Only one configuration file (.json) describing the setup :</li>
-<ul>
-<li>A global configuration including:
-    <ul>
-    <li>Connection tools (SSH, SFTP, etc.)</li>
-    <li>KeePass vaults</li>
-    </ul>
-</li>
-</ul>
-<ul>
-<li>Connections are structured as following :
-    <ul>
-    <li>IP address</li>
-    <li>Connection port</li>
-    <li>Connection tool to use</li>
-    <li>KeePass vault to use</li>
-    <li>Username for retrieving the vault password</li>
-    </ul>
-</li>
-</ul>
-
-<li>All is done from the main window :</li>
-    <ul>
-    <li>Access to preferences window using <img src="icons/prefs.png" alt="Description" width="20" height="20">. There are two tabs :
-        <ul>
-        <li>One to configure the applications</li>
-        <li>One to  configure the keepass vaults</li>
-        <li>Exiting the window automatically save changes of both tabs</li>
-        </ul>
-    </li>
-    <li>Create a sub-tree <img src="icons/add_folder.png" alt="Description" width="20" height="20"></li>
-    <li>Create a connections <img src="icons/add_computer.png" alt="Description" width="20" height="20"></li>
-    <li>Delete a sub-tree or a connection <img src="icons/trash.png" alt="Description" width="20" height="20"></li>
-    <li>Selecting an item allow its modification :</li>
-        <ul>
-        <li>For a sub-tree, its name</li>
-        <li>For a connection, all its structure, described previously</li>
-        <li>Modification is saved by clicking <img src="icons/edit.png" alt="Description" width="20" height="20"></li>
-        </ul>
-    </li>
-    </ul>
-
-<li>Drag and drop in connections tree allow to reorder sub-trees and connections. All changes are saved automatically.</li>
-<li>If one or many keepass are defined, each vault password is asked at startup (or when you configure one ... I guess &#x1F914;). Each password is encrypted in memory. None of them are saved in the configuration file. The vaults are used in conjunction with the username defined for each connection.</li>
-</ol>  
+## Features
+1. Only one configuration file (.json) describing the setup :
+    * A global configuration including:
+        * Connection tools (SSH, SFTP, etc.)
+        * KeePass vaults
+    * Connections are structured as following :
+        * Its name
+        * IP address
+        * Connection port
+        * Connection tool to use
+        * KeePass vault to use
+        * Username for retrieving its vault password
+2. All is done from the main window :
+    * Create a sub-tree
+    * Create a connections
+    * Delete a sub-tree or a connection
+    * Access to preferences window
+    * Selecting an item allow its modification :
+        * For a sub-tree, its name
+        * For a connection, all its structure, described previously
+3. Drag and drop in connections tree allow to reorder sub-trees and connections. All changes are saved automatically.
+4. If one or many keepass are defined, each vault password is asked at startup (or when you configure a new one ... not implemented yet). Each password is encrypted in memory. None of them are saved in the configuration file (unlike mRemoteNG). The vaults are used in conjunction with the username defined for each connection.
 
 ## Installation
 
@@ -109,6 +84,40 @@ python.exe .\YARCoM.py
 ./YARCoM.py
 ```
 **N.B. :** _shebang script is configured with_ `#!/usr/bin/env python3`_, so it will run with your_ `venv` _installed python._
+
+## Configuration
+### Main window
+* Create a sub-tree <img src="icons/add_folder.png" alt="Add folder icon button" width="20" height="20">
+* Create a connections <img src="icons/add_computer.png" alt="Add computer icon button" width="20" height="20">
+* Delete a sub-tree or a connection <img src="icons/trash.png" alt="Delete trash icon button" width="20" height="20">
+* Selecting an item allow its modification :
+    * For a sub-tree, its name
+    * For a connection, all its structure, described previously
+    * Modification is saved by clicking <img src="icons/edit.png" alt="Edit pencil icon button" width="20" height="20">
+
+### Preferences window <img src="icons/prefs.png" alt="Settings gear icon button" width="20" height="20">
+#### Applications
+* Give a name to the new application
+* Enter its path and eventually the first argument
+    ```shell
+    /usr/bin/konsole -e
+    ```
+* Enter the arguments needed to connect to the equipement
+    ```shell
+    /usr/bin/sshpass -p <password> /usr/bin/ssh -o StrictHostKeyChecking=accept-new -l <user> -p <port> <ip>
+    ```
+    here, 2 commands are used :
+    * ```sshpass -p <password>``` to give the password retreived from the vault
+    * ```/usr/bin/ssh -o StrictHostKeyChecking=accept-new -l <user> -p <port> <ip>```
+        * ```-o StrictHostKeyChecking=accept-new``` to automatically accept new fingerprint from the new connection
+        * ```-l <user>``` to give the username to ```ssh```
+        * ```-p <port>``` to give the port to ```ssh```
+        * ```<ip>``` to give the IP address to ```ssh```
+#### Keepass vaults
+* Give a name to the vault
+* Enter its path
+
+[!NOTE] Configuration is saved when the window is closed.
 
 ## Contributing
 Me &#x1f601;

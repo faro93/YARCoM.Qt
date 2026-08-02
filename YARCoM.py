@@ -8,7 +8,7 @@ import re
 from copy import deepcopy
 
 from PySide6.QtCore import Qt, QTimer, QObject, QRect
-# from PySide6.QtGui import QCursor
+from PySide6.QtGui import QIcon #,QCursor
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTreeWidgetItem, QMenu, QTreeWidget
 from main.UI.main_ui import Ui_MainWindow
 from kbdx.kbdx import KBDX_Dialog
@@ -236,9 +236,9 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
         self.setWindowTitle("YARCoM for Qt")
         self.conf = self.readConfFile(self.confFile)
-        if self.conf is None:
-            self.displayError("Fichier de configuration absent ou invalide.")
-            return
+        # if self.conf is None:
+        #     self.displayError("Fichier de configuration absent ou invalide.")
+        #     return
         self.globalConf = self.conf.get("global", {})
         self.connexions = self.conf.get("connexions", {})
         self.apps = self.globalConf.get("apps", {})
@@ -1114,8 +1114,9 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             f = open(confFile, "w", encoding="utf-8")
             f.write(json.dumps({"global": {"apps": {}, "kbdx":{}}, "connexions": {}}, indent=4))
             f.close()
+            conf = {"global": {"apps": {}, "kbdx":{}}, "connexions": {}}
             self.logger.debug(f"Fichier de configuration '{confFile}' créé avec succès.")
-            return None
+            return conf
 
     def parseConf(self):
         """Analyse et modifie la configuration chargée"""
@@ -1175,6 +1176,9 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             errorBox.setStandardButtons(QMessageBox.NoButton)  # Pas de bouton OK
         else:
             errorBox.setStandardButtons(QMessageBox.Ok)
+        errorBox.setWindowFlags(Qt.Dialog | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowStaysOnTopHint)
+        errorBox.setModal(True)
+        errorBox.setWindowIcon(QIcon("icons/YARCoM.icon.340x225.png"))
         errorBox.show()
         if auto_close:
             QTimer.singleShot(delay, lambda: setattr(self, "_errorBox", None))
