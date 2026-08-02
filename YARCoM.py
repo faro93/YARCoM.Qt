@@ -347,6 +347,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         """Ouvre la boîte de dialogue des préférences KeePass"""
         self.displayPreferenceDialog()
         for kbdx_name, kbdx_info in self.globalConf.get("kbdxFiles", {}).items():
+            self.kbdxPassword = True
             self.logger.debug(f"{kbdx_name} : {json.dumps(kbdx_info, indent=4)}")
             ciphered = kbdx_info.get("ciphered", False)
             valid = kbdx_info.get("valid", False)
@@ -564,7 +565,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         
         user = item.itemCnx.get("user", "")
         ip = item.itemCnx.get("ip", "")
-        if application == "default":
+        if application == "default" and item.itemCnx["port"].isdigit():
             port = item.itemCnx.get("port", "")
         else:
             port = app_conf.get("port", "")
@@ -582,15 +583,16 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                 self.displayError(f"Impossible de lancer l'application : mot de passe KeePass pour '{kbdx}' non saisi.", delay=5000, auto_close=True)
                 return
 
-        # Rechercher le compte dans la base KeePass si kbdx et user sont définis
-        self.logger.info(f"Recherche du compte '{user}' dans la base KeePass '{kbdx}'")
-        account_info = self.search_account_in_vault(kbdx, user)
-        if account_info:
-            accountDatas = json.dumps(account_info, indent=4)
-            accountDatas = re.sub(r'("password"\s*:\s*").*(")', r'\1********\2', accountDatas)
-            self.logger.debug(f"  - account_info   : {accountDatas}")
-        else:
-            self.logger.info(f"Compte introuvable dans la base KeePass '{kbdx}'")
+        if kbdx:
+            # Rechercher le compte dans la base KeePass si kbdx et user sont définis
+            self.logger.info(f"Recherche du compte '{user}' dans la base KeePass '{kbdx}'")
+            account_info = self.search_account_in_vault(kbdx, user)
+            if account_info:
+                accountDatas = json.dumps(account_info, indent=4)
+                accountDatas = re.sub(r'("password"\s*:\s*").*(")', r'\1********\2', accountDatas)
+                self.logger.debug(f"  - account_info   : {accountDatas}")
+            else:
+                self.logger.info(f"Compte introuvable dans la base KeePass '{kbdx}'")
 
         # Création de la commande à lancer
         cmd = list()
@@ -598,12 +600,19 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         if app_bin:
             cmd.extend(app_bin.split())
         for part in app_args.split():
-            part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port).replace("<password>", account_info.get("password", ""))
+            if kbdx:
+                part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port).replace("<password>", account_info.get("password", ""))
+            else:
+                part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port)
             my_args.append(part)
         cmd.append(' '.join(my_args))
-        cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
-        self.logger.debug(f"Lancement de : {cmdStringProtected}")
-        account_info.clear()  # Effacer les informations sensibles de la mémoire
+        if kbdx:
+            cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
+            self.logger.debug(f"Lancement de : {cmdStringProtected}")
+            account_info.clear()  # Effacer les informations sensibles de la mémoire
+        else:
+            self.logger.debug(f"Lancement de : {' '.join(cmd)}")
+
         ##################################################################################
         # if sys.platform.startswith('win'):
         #     # Sous Windows, utiliser shell=True pour permettre l'expansion des variables d'environnement et l'exécution de commandes internes
