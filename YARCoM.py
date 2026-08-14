@@ -265,15 +265,43 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.tw_Cnx.customContextMenuRequested.connect(self.show_context_menu)
 
         if self.cb_Application is not None:
-            self.cb_Application.addItems(self.apps.keys())
-            self.cb_Application.setCurrentIndex(-1)
-            self.cb_Application.setEnabled(False)
+            self.confComboApps()
+            # self.cb_Application.addItems(self.apps.keys())
+            # self.cb_Application.setCurrentIndex(-1)
+            # self.cb_Application.setEnabled(False)
         if self.cb_KBDX is not None:
-            self.cb_KBDX.addItems(self.globalConf.get("kbdxFiles", {}).keys())
-            self.cb_KBDX.setCurrentIndex(-1)
-            self.cb_KBDX.setEnabled(False)
+            self.confComboKBDX()
+            # kbdxFiles = self.globalConf.get("kbdxFiles", {})
+            # if kbdxFiles:
+            #     self.cb_KBDX.addItem("Aucun") 
+            #     self.cb_KBDX.addItems(kbdxFiles.keys())
+            # else:
+            #     self.cb_KBDX.addItem("Aucun")
+            # self.cb_KBDX.setCurrentIndex(-1)
+            # self.cb_KBDX.setEnabled(False)
         # Désactiver et effacer les champs de modification par défaut
         self.clear_twCnx_fields()
+
+    def confComboApps(self):
+        """Configure le QComboBox cb_Application avec les applications disponibles"""
+        self.cb_Application.clear()
+        apps = self.globalConf.get("apps", {})
+        if apps:
+            self.cb_Application.addItems(apps.keys())
+        self.cb_Application.setCurrentIndex(-1)
+        self.cb_Application.setEnabled(False)
+
+    def confComboKBDX(self):
+        """Configure le QComboBox cb_KBDX avec les fichiers KeePass disponibles"""
+        self.cb_KBDX.clear()
+        kbdxFiles = self.globalConf.get("kbdxFiles", {})
+        if kbdxFiles:
+            self.cb_KBDX.addItem("Aucun") 
+            self.cb_KBDX.addItems(kbdxFiles.keys())
+        else:
+            self.cb_KBDX.addItem("Aucun")
+        self.cb_KBDX.setCurrentIndex(-1)
+        self.cb_KBDX.setEnabled(False)
 
     def update_connexions_after_drop(self):
         """Met à jour le dictionnaire des connexions après un déplacement d'item dans l'arborescence"""
@@ -355,16 +383,11 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                 self.logger.debug(f"  - Affichage de la boîte de dialogue de mot de passe pour '{kbdx_name}'")
                 self.displayPasswordDialog(kbdx_name)
         if self.cb_Application.count() != len(list(self.globalConf["apps"].keys())):
-            self.apps = self.globalConf.get("apps", {})
-            self.cb_Application.clear()
-            self.cb_Application.addItems(self.apps.keys())
-            self.cb_Application.setCurrentIndex(-1)
-            self.cb_Application.setEnabled(False)
-        if self.cb_KBDX.count() != len(list(self.globalConf["kbdxFiles"].keys())):
-            self.cb_KBDX.clear()
-            self.cb_KBDX.addItems(self.globalConf.get("kbdxFiles", {}).keys())
-            self.cb_KBDX.setCurrentIndex(-1)
-            self.cb_KBDX.setEnabled(False)
+            self.confComboApps()
+        if (self.cb_KBDX.count()+1) != len(list(self.globalConf["kbdxFiles"].keys())):
+            self.confComboKBDX()
+        if self.selected_item:
+            self.selected_item.setSelected(False)
 
     def on_pb_TreeDelete_clicked(self):
         """Supprime l'item de l'arborescence"""
@@ -571,28 +594,34 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             port = app_conf.get("port", "")
         kbdx = item.itemCnx.get("kbdx", "")
 
+        if not user and kbdx != "Aucun":
+            self.displayError("Impossible de lancer l'application : utilisateur non défini.", auto_close=True)
+            return
+
         if not app_bin or not ip:
-            self.displayError("Impossible de lancer l'application : configuration incomplète.", auto_close=True)
+            self.displayError("Impossible de lancer l'application : configuration incomplète.", auto_close=True)
             return
         self.logger.debug(f"app_name={app_name},\napp_bin={app_bin},\napp_args={app_args},\nuser={user},\nip={ip},\nport={port},\nkbdx={kbdx}")
 
         # Vérifier si le(s) mot(s) de passe KeePass a/ont été saisi(s)
-        if kbdx and not self.globalConf["kbdxFiles"][kbdx]["ciphered"]:
-            self.displayPasswordDialog()
-            if not self.globalConf["kbdxFiles"][kbdx]["ciphered"] and not self.globalConf["kbdxFiles"][kbdx]["valid"]:
-                self.displayError(f"Impossible de lancer l'application : mot de passe KeePass pour '{kbdx}' non saisi.", delay=5000, auto_close=True)
-                return
+        if kbdx != "Aucun":
+            if kbdx and not self.globalConf["kbdxFiles"][kbdx]["ciphered"]:
+                self.displayPasswordDialog()
+                if not self.globalConf["kbdxFiles"][kbdx]["ciphered"] and not self.globalConf["kbdxFiles"][kbdx]["valid"]:
+                    self.displayError(f"Impossible de lancer l'application : mot de passe KeePass pour '{kbdx}' non saisi.", delay=5000, auto_close=True)
+                    return
 
-        if kbdx:
-            # Rechercher le compte dans la base KeePass si kbdx et user sont définis
-            self.logger.info(f"Recherche du compte '{user}' dans la base KeePass '{kbdx}'")
-            account_info = self.search_account_in_vault(kbdx, user)
-            if account_info:
-                accountDatas = json.dumps(account_info, indent=4)
-                accountDatas = re.sub(r'("password"\s*:\s*").*(")', r'\1********\2', accountDatas)
-                self.logger.debug(f"  - account_info   : {accountDatas}")
-            else:
-                self.logger.info(f"Compte introuvable dans la base KeePass '{kbdx}'")
+            if kbdx:
+                # Rechercher le compte dans la base KeePass si kbdx et user sont définis
+                self.logger.info(f"Recherche du compte '{user}' dans la base KeePass '{kbdx}'")
+                account_info = self.search_account_in_vault(kbdx, user)
+                if account_info:
+                    accountDatas = json.dumps(account_info, indent=4)
+                    accountDatas = re.sub(r'("password"\s*:\s*").*(")', r'\1********\2', accountDatas)
+                    self.logger.debug(f" - account_info : {accountDatas}")
+                else:
+                    self.logger.info(f"Compte introuvable dans la base KeePass '{kbdx}'")
+                    self.displayError(f"Compte '{user}' introuvable dans la base KeePass '{kbdx}'", delay=2000, auto_close=True)
 
         # Création de la commande à lancer
         cmd = list()
@@ -600,18 +629,18 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         if app_bin:
             cmd.extend(app_bin.split())
         for part in app_args.split():
-            if kbdx:
+            if kbdx != "Aucun":# and account_info:
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port).replace("<password>", account_info.get("password", ""))
             else:
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port)
             my_args.append(part)
         cmd.append(' '.join(my_args))
-        if kbdx:
+        if kbdx != "Aucun":
             cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
-            self.logger.debug(f"Lancement de : {cmdStringProtected}")
+            self.logger.debug(f"Lancement de : {cmdStringProtected}")
             account_info.clear()  # Effacer les informations sensibles de la mémoire
         else:
-            self.logger.debug(f"Lancement de : {' '.join(cmd)}")
+            self.logger.debug(f"Lancement de : {' '.join(cmd)}")
 
         ##################################################################################
         # if sys.platform.startswith('win'):
