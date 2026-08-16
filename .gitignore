@@ -5,6 +5,7 @@
 /.git
 /.gitignore
 /icons/archives
+/index.html
 /PréProduction.json
 /__pycache__
 /PySide6.env.py

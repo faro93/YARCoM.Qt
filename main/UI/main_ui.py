@@ -113,6 +113,19 @@ class Ui_MainWindow(object):
 
         self.hl_TreeButtons.addWidget(self.pb_Preferences)
 
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.hl_TreeButtons.addItem(self.horizontalSpacer_10)
+
+        self.pb_About = QPushButton(self.gb_Tree)
+        self.pb_About.setObjectName(u"pb_About")
+        icon5 = QIcon()
+        icon5.addFile(u":/main/icons/info.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pb_About.setIcon(icon5)
+        self.pb_About.setIconSize(QSize(32, 32))
+
+        self.hl_TreeButtons.addWidget(self.pb_About)
+
         self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.hl_TreeButtons.addItem(self.horizontalSpacer_7)
@@ -241,9 +254,9 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pb_ModifyCnx.sizePolicy().hasHeightForWidth())
         self.pb_ModifyCnx.setSizePolicy(sizePolicy)
-        icon5 = QIcon()
-        icon5.addFile(u":/main/icons/edit.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.pb_ModifyCnx.setIcon(icon5)
+        icon6 = QIcon()
+        icon6.addFile(u":/main/icons/edit.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pb_ModifyCnx.setIcon(icon6)
         self.pb_ModifyCnx.setIconSize(QSize(32, 32))
 
         self.gl_DetailButtons.addWidget(self.pb_ModifyCnx, 0, 1, 1, 1)
@@ -306,6 +319,7 @@ class Ui_MainWindow(object):
         self.pb_Preferences.setToolTip(QCoreApplication.translate("MainWindow", u"Pr\u00e9f\u00e9rences", None))
 #endif // QT_CONFIG(tooltip)
         self.pb_Preferences.setText("")
+        self.pb_About.setText("")
         self.pb_FoldUnfoldTree.setText(QCoreApplication.translate("MainWindow", u"Plier/D\u00e9plier", None))
         self.gb_Detail.setTitle(QCoreApplication.translate("MainWindow", u"Detail de la connexion", None))
         self.lb_Hostname.setText(QCoreApplication.translate("MainWindow", u"Nom d'h\u00f4te", None))

@@ -9,7 +9,7 @@ from copy import deepcopy
 
 from PySide6.QtCore import Qt, QTimer, QObject, QRect
 from PySide6.QtGui import QIcon #,QCursor
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTreeWidgetItem, QMenu, QTreeWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTreeWidgetItem, QMenu, QTreeWidget, QDialog, QVBoxLayout, QLabel
 from main.UI.main_ui import Ui_MainWindow
 from kbdx.kbdx import KBDX_Dialog
 from preferences.preferences import Preferences_Dialog
@@ -24,6 +24,43 @@ logging.basicConfig(
     level=logging.DEBUG,
     format = "%(asctime)s - %(filename)s.#%(lineno)d - %(funcName)s - %(levelname)s - %(message)s")
 
+class AboutDialog(QDialog):
+    """Boîte de dialogue "À propos" de l'application YARCoM
+
+    Args:
+        QDialog : Classe de base pour les boîtes de dialogue
+    """
+    def __init__(self, parent=None, author="faro", version="1.1.0", date="2026/08/16"):
+        super().__init__(parent)
+        self.setWindowTitle("À propos de YARCoM")
+        self.setWindowIcon(QIcon("icons/YARCoM.icon.340x225.png"))
+        self.setFixedSize(400, 300)
+
+        # Créer un QLabel pour afficher le texte
+        about_text = (
+            f'<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">'
+            f'  <tr>'
+            f'      <td colspan="2" style="text-align: center;"><img src="icons/YARCoM.by.faro340x233.png" alt="YARCoM Icon" width="350">'
+            f'      </td>'
+            f'  </tr>'
+            f'  <tr>'
+            f'      <td style="text-align: center;">Version {version}</td>'
+            f'      <td style="text-align: center;">Date : {date}</td>'
+            f'  </tr>'
+            f'  <tr>'
+            f'      <td style="text-align: center;">Auteur : {author}</td>'
+            f'      <td style="text-align: center;"><a href="https://github.com/faro93/YARCoM.Qt">YARCoM.Qt</a></td>'
+            f'  </tr>'
+            f'</table>'
+        )
+        label = QLabel(about_text, self)
+        # label.setAlignment(Qt.AlignCenter)
+        label.setWordWrap(True)
+
+        # Créer un layout vertical et ajouter le QLabel
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        self.setLayout(layout)
 class CustomQTreeWidgetItem(QTreeWidgetItem):
     """Surcharge de QTreeWidgetItem pour ajouter des attributs itemType et itemCnx
 
@@ -208,7 +245,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         # Variables diverses
         self.version = "1.1.0"
         self.version_string = "2026/08/16"
-        self.author = "faro"
+        self.author = "faro93"
         self.confFile = "yarcom.qt.conf.json"
         self.kbdxPassword = False
         self.passwordCiphered = False
@@ -261,6 +298,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.pb_Preferences.clicked.connect(self.on_pb_Preferences_clicked)
         self.tw_Cnx.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tw_Cnx.customContextMenuRequested.connect(self.show_context_menu)
+        self.pb_About.clicked.connect(self.on_pb_About_clicked)
 
         if self.cb_Application is not None:
             self.confComboApps()
@@ -357,6 +395,15 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             top_item = self.tw_Cnx.topLevelItem(i)
             if top_item.text(0) in expansion_state:
                 recursive_restore(top_item, expansion_state[top_item.text(0)])
+
+    def on_pb_About_clicked(self):
+        """Ouvre la boîte de dialogue "À propos" """
+        about_dialog = AboutDialog(
+            author=self.author,
+            version=self.version,
+            date=self.version_string
+        )
+        about_dialog.exec_()
 
     def on_pb_Preferences_clicked(self):
         """Ouvre la boîte de dialogue des préférences KeePass"""

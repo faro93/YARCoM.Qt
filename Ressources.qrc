@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="main">
+    <file>icons/info.png</file>
     <file>icons/add_computer.png</file>
     <file>icons/add_folder.png</file>
     <file>icons/edit.png</file>
