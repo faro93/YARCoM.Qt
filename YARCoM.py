@@ -20,8 +20,6 @@ from preferences.preferences import Preferences_Dialog
 
 #TODO : Vérifier fonctionnement sur autre OS que Linux (Windows, macOS si possible)
 
-#TODO : Créer une fenêtre "à propos" avec les infos de version, auteur, date, licence, icone, etc.
-
 logging.basicConfig(
     level=logging.DEBUG,
     format = "%(asctime)s - %(filename)s.#%(lineno)d - %(funcName)s - %(levelname)s - %(message)s")
@@ -208,8 +206,8 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.logger = logging.getLogger(self.__class__.__name__)
 
         # Variables diverses
-        self.version = "1.0"
-        self.version_string = "2026/08/01"
+        self.version = "1.1.0"
+        self.version_string = "2026/08/16"
         self.author = "faro"
         self.confFile = "yarcom.qt.conf.json"
         self.kbdxPassword = False
