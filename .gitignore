@@ -10,7 +10,7 @@
 /__pycache__
 /PySide6.env.py
 /Qualification.json
-/test.*
+/tests/*
 /.venv
 /.vscode
 /yarcom.qt.conf.*
