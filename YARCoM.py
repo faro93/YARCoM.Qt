@@ -21,7 +21,7 @@ from preferences.preferences import Preferences_Dialog
 #TODO : Vérifier fonctionnement sur autre OS que Linux (Windows, macOS si possible)
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format = "%(asctime)s - %(filename)s.#%(lineno)d - %(funcName)s - %(levelname)s - %(message)s")
 
 class AboutDialog(QDialog):
