@@ -23,7 +23,7 @@ from preferences.preferences import Preferences_Dialog
 #TODO : Créer une fenêtre "à propos" avec les infos de version, auteur, date, licence, icone, etc.
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format = "%(asctime)s - %(filename)s.#%(lineno)d - %(funcName)s - %(levelname)s - %(message)s")
 
 class CustomQTreeWidgetItem(QTreeWidgetItem):
@@ -266,28 +266,17 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
         if self.cb_Application is not None:
             self.confComboApps()
-            # self.cb_Application.addItems(self.apps.keys())
-            # self.cb_Application.setCurrentIndex(-1)
-            # self.cb_Application.setEnabled(False)
         if self.cb_KBDX is not None:
             self.confComboKBDX()
-            # kbdxFiles = self.globalConf.get("kbdxFiles", {})
-            # if kbdxFiles:
-            #     self.cb_KBDX.addItem("Aucun") 
-            #     self.cb_KBDX.addItems(kbdxFiles.keys())
-            # else:
-            #     self.cb_KBDX.addItem("Aucun")
-            # self.cb_KBDX.setCurrentIndex(-1)
-            # self.cb_KBDX.setEnabled(False)
         # Désactiver et effacer les champs de modification par défaut
         self.clear_twCnx_fields()
 
     def confComboApps(self):
         """Configure le QComboBox cb_Application avec les applications disponibles"""
         self.cb_Application.clear()
-        apps = self.globalConf.get("apps", {})
-        if apps:
-            self.cb_Application.addItems(apps.keys())
+        self.apps = self.globalConf.get("apps", {})
+        if self.apps:
+            self.cb_Application.addItems(self.apps.keys())
         self.cb_Application.setCurrentIndex(-1)
         self.cb_Application.setEnabled(False)
 
@@ -296,10 +285,10 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.cb_KBDX.clear()
         kbdxFiles = self.globalConf.get("kbdxFiles", {})
         if kbdxFiles:
-            self.cb_KBDX.addItem("Aucun") 
+            self.cb_KBDX.addItem("") 
             self.cb_KBDX.addItems(kbdxFiles.keys())
         else:
-            self.cb_KBDX.addItem("Aucun")
+            self.cb_KBDX.addItem("")
         self.cb_KBDX.setCurrentIndex(-1)
         self.cb_KBDX.setEnabled(False)
 
@@ -588,13 +577,16 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         
         user = item.itemCnx.get("user", "")
         ip = item.itemCnx.get("ip", "")
+        if not ip:
+            self.displayError("Impossible de lancer l'application : adresse IP non définie.", auto_close=True)
+            return
         if application == "default" and item.itemCnx["port"].isdigit():
             port = item.itemCnx.get("port", "")
         else:
             port = app_conf.get("port", "")
         kbdx = item.itemCnx.get("kbdx", "")
 
-        if not user and kbdx != "Aucun":
+        if not user and kbdx != "":
             self.displayError("Impossible de lancer l'application : utilisateur non défini.", auto_close=True)
             return
 
@@ -604,7 +596,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         self.logger.debug(f"app_name={app_name},\napp_bin={app_bin},\napp_args={app_args},\nuser={user},\nip={ip},\nport={port},\nkbdx={kbdx}")
 
         # Vérifier si le(s) mot(s) de passe KeePass a/ont été saisi(s)
-        if kbdx != "Aucun":
+        if kbdx != "":
             if kbdx and not self.globalConf["kbdxFiles"][kbdx]["ciphered"]:
                 self.displayPasswordDialog()
                 if not self.globalConf["kbdxFiles"][kbdx]["ciphered"] and not self.globalConf["kbdxFiles"][kbdx]["valid"]:
@@ -629,13 +621,13 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         if app_bin:
             cmd.extend(app_bin.split())
         for part in app_args.split():
-            if kbdx != "Aucun":# and account_info:
+            if kbdx != "":# and account_info:
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port).replace("<password>", account_info.get("password", ""))
             else:
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port)
             my_args.append(part)
         cmd.append(' '.join(my_args))
-        if kbdx != "Aucun":
+        if kbdx != "":
             cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
             self.logger.debug(f"Lancement de : {cmdStringProtected}")
             account_info.clear()  # Effacer les informations sensibles de la mémoire
