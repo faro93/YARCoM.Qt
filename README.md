@@ -49,7 +49,7 @@ A keepass vault can be associated to retrieve passwords automatically.
         * For a sub-tree, its name
         * For a connection, all its structure, described previously
 3. Drag and drop in connections tree allow to reorder sub-trees and connections. All changes are saved automatically.
-4. If one or many keepass are defined, each vault password is asked at startup (or when you configure a new one ... not implemented yet). Each password is encrypted in memory. None of them are saved in the configuration file (unlike mRemoteNG). The vaults are used in conjunction with the username defined for each connection.
+4. If one or many keepass are defined, each vault password is asked at startup (or when you configure a new one). Each password is encrypted in memory. None of them are saved in the configuration file (unlike mRemoteNG). The vaults are used in conjunction with the username defined for each connection.
 
 ## Installation
 
