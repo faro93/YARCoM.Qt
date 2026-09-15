@@ -403,7 +403,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             version=self.version,
             date=self.version_string
         )
-        about_dialog.exec_()
+        about_dialog.exec()
 
     def on_pb_Preferences_clicked(self):
         """Ouvre la boîte de dialogue des préférences KeePass"""
