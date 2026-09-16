@@ -667,6 +667,10 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             cmd.extend(app_bin.split())
         for part in app_args.split():
             if kbdx != "":# and account_info:
+                if user == account_info.get("title", ""):
+                    self.logger.debug(f"Utilisateur {user} est un 'title' dans la base KeePass '{kbdx}'")
+                    self.logger.debug(f"Utilisateur {user} est modifié en {account_info.get('username', '')}")
+                    user = account_info.get("username", user)
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port).replace("<password>", account_info.get("password", ""))
             else:
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port)
@@ -1137,7 +1141,8 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                             self.logger.debug(f"kbdxFiles[{vault}] = {json.dumps(kbdxFiles[vault], indent=4)}")
                             if kbdxFiles[vault]["ciphered"]:
                                 file = kbdxFiles[vault].get("file", "")
-                                self.logger.debug(f"{vault} keepass key  = {kbdxFiles[vault].get("password", "")} ({self.kbdxForm.uncipherPassword(kbdxFiles[vault].get("password", "")) if kbdxFiles[vault].get("password", "") else ''})")
+                                #self.logger.debug(f"{vault} keepass key  = {kbdxFiles[vault].get("password", "")} ({self.kbdxForm.uncipherPassword(kbdxFiles[vault].get("password", "")) if kbdxFiles[vault].get("password", "") else ''})")
+                                self.logger.debug(f"{vault} keepass key  = {kbdxFiles[vault].get("password", "")}")
                                 kbdxFiles[vault]["valid"] = self.kbdxForm.openKbdxFile(vault, file)
                                 if kbdxFiles[vault]["valid"] is False:
                                     kbdxFiles[vault]["ciphered"] = False
