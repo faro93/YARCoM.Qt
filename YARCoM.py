@@ -675,7 +675,8 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             else:
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port)
             my_args.append(part)
-        cmd.append(' '.join(my_args))
+        # cmd.append(' '.join(my_args))
+        cmd.extend(my_args)
         if kbdx != "":
             cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
             self.logger.debug(f"Lancement de : {cmdStringProtected}")
