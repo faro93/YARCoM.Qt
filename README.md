@@ -40,7 +40,7 @@ A keepass vault can be associated to retrieve passwords automatically.
         * Connection tool to use
         * KeePass vault to use
         * Username for retrieving its vault password
-> When a Keepass database is provided, username can be one of the 'title' or 'username' Keepass element.
+> When a Keepass database is provided, username can be one of the 'title' or 'username' Keepass element. If this references a 'username' element, be aware that the last found in the database will be retreived.
 2. All is done from the main window :
     * Create a sub-tree
     * Create a connections
