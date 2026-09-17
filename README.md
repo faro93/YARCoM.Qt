@@ -40,6 +40,7 @@ A keepass vault can be associated to retrieve passwords automatically.
         * Connection tool to use
         * KeePass vault to use
         * Username for retrieving its vault password
+> [!NOTE] When a Keepass database is provided, username can be one of the 'title' or 'username' Keepass element.
 2. All is done from the main window :
     * Create a sub-tree
     * Create a connections
@@ -87,8 +88,8 @@ python.exe .\YARCoM.py
 
 ## Configuration
 ### Main window
-* Create a sub-tree <img src="icons/add_folder.png" alt="Add folder icon button" width="20" height="20">
-* Create a connections <img src="icons/add_computer.png" alt="Add computer icon button" width="20" height="20">
+* Create a new sub-tree <img src="icons/add_folder.png" alt="Add folder icon button" width="20" height="20">
+* Create a new connection <img src="icons/add_computer.png" alt="Add computer icon button" width="20" height="20">
 * Delete a sub-tree or a connection <img src="icons/trash.png" alt="Delete trash icon button" width="20" height="20">
 * Selecting an item allow its modification :
     * For a sub-tree, its name
