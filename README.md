@@ -108,7 +108,7 @@ python.exe .\YARCoM.py
     /usr/bin/sshpass -p <password> /usr/bin/ssh -o StrictHostKeyChecking=accept-new -l <user> -p <port> <ip>
     ```
     here, 2 commands are used :
-    * ```sshpass -p <password>``` to give the password retreived from the vault
+    * ```sshpass -p <password>``` to give the password retrieved from the vault
     * ```/usr/bin/ssh -o StrictHostKeyChecking=accept-new -l <user> -p <port> <ip>```
         * ```-o StrictHostKeyChecking=accept-new``` to automatically accept new fingerprint from the new connection
         * ```-l <user>``` to give the username to ```ssh```
