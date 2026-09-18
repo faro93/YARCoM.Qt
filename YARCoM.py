@@ -13,6 +13,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTreeWidge
 from main.UI.main_ui import Ui_MainWindow
 from kbdx.kbdx import KBDX_Dialog
 from preferences.preferences import Preferences_Dialog
+from about.about import About_Dialog
 
 #TODO : [Gérer la touche "ENTREE" pour valider les modifications dans les champs]
 
@@ -23,44 +24,6 @@ from preferences.preferences import Preferences_Dialog
 logging.basicConfig(
     level=logging.INFO,
     format = "%(asctime)s - %(filename)s.#%(lineno)d - %(funcName)s - %(levelname)s - %(message)s")
-
-class AboutDialog(QDialog):
-    """Boîte de dialogue "À propos" de l'application YARCoM
-
-    Args:
-        QDialog : Classe de base pour les boîtes de dialogue
-    """
-    def __init__(self, parent=None, author="faro", version="1.1.0", date="2026/08/16"):
-        super().__init__(parent)
-        self.setWindowTitle("À propos de YARCoM")
-        self.setWindowIcon(QIcon("icons/YARCoM.icon.340x225.png"))
-        self.setFixedSize(400, 300)
-
-        # Créer un QLabel pour afficher le texte
-        about_text = (
-            f'<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">'
-            f'  <tr>'
-            f'      <td colspan="2" style="text-align: center;"><img src="icons/YARCoM.by.faro340x233.png" alt="YARCoM Icon" width="350">'
-            f'      </td>'
-            f'  </tr>'
-            f'  <tr>'
-            f'      <td style="text-align: center;">Version {version}</td>'
-            f'      <td style="text-align: center;">Date : {date}</td>'
-            f'  </tr>'
-            f'  <tr>'
-            f'      <td style="text-align: center;">Auteur : {author}</td>'
-            f'      <td style="text-align: center;"><a href="https://github.com/faro93/YARCoM.Qt">YARCoM.Qt</a></td>'
-            f'  </tr>'
-            f'</table>'
-        )
-        label = QLabel(about_text, self)
-        # label.setAlignment(Qt.AlignCenter)
-        label.setWordWrap(True)
-
-        # Créer un layout vertical et ajouter le QLabel
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        self.setLayout(layout)
 class CustomQTreeWidgetItem(QTreeWidgetItem):
     """Surcharge de QTreeWidgetItem pour ajouter des attributs itemType et itemCnx
 
@@ -244,8 +207,11 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
         # Variables diverses
         self.version = "1.1.0"
-        self.version_string = "2026/08/16"
+        self.version_string = "2026/09/18"
         self.author = "faro93"
+        self.license = "GPLv3"
+        self.website = "https://github.com/faro93/YARCoM.Qt"
+        self.description = "YARCoM for Qt"
         self.confFile = "yarcom.qt.conf.json"
         self.kbdxPassword = False
         self.passwordCiphered = False
@@ -398,12 +364,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
 
     def on_pb_About_clicked(self):
         """Ouvre la boîte de dialogue "À propos" """
-        about_dialog = AboutDialog(
-            author=self.author,
-            version=self.version,
-            date=self.version_string
-        )
-        about_dialog.exec()
+        about_dialog = self.displayAboutDialog()
 
     def on_pb_Preferences_clicked(self):
         """Ouvre la boîte de dialogue des préférences KeePass"""
@@ -675,7 +636,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             else:
                 part = part.replace("<user>", user).replace("<ip>", ip).replace("<port>", port)
             my_args.append(part)
-        # cmd.append(' '.join(my_args))
         cmd.extend(my_args)
         if kbdx != "":
             cmdStringProtected = ' '.join(cmd).replace(account_info.get("password", ""), "********") if account_info.get("password", "") else ' '.join(cmd)
@@ -683,18 +643,6 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
             account_info.clear()  # Effacer les informations sensibles de la mémoire
         else:
             self.logger.debug(f"Lancement de : {' '.join(cmd)}")
-
-        ##################################################################################
-        # if sys.platform.startswith('win'):
-        #     # Sous Windows, utiliser shell=True pour permettre l'expansion des variables d'environnement et l'exécution de commandes internes
-        #     shell = False
-        # else:
-        #     # Sous Linux/Mac, cmd doit être une liste d'arguments et shell=False pour éviter les problèmes de sécurité
-        #     shell = False
-        #     if "ssh" in app_bin.lower() or "ssh" in app_args.lower():
-        #         # Si l'application est SSH, utiliser shell=True pour permettre l'expansion des variables d'environnement et l'exécution de commandes internes
-        #         shell = True
-        ##################################################################################
 
         try:
             subprocess.Popen(cmd, shell=False)
@@ -1084,6 +1032,21 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                         parent.addTopLevelItem(item) if parent is self.tw_Cnx else parent.addChild(item)
                         self.populate_twCnx(v, item)
 
+    def displayAboutDialog(self):
+        """Affiche la boîte de dialogue 'À propos'"""
+        if not hasattr(self, "aboutForm"):
+            self.aboutForm = About_Dialog(
+                author=self.author,
+                version=self.version,
+                description=self.description,
+                license=self.license,
+                website=self.website
+            )
+        self.aboutForm.setWindowTitle("À propos de YARCoM.Qt ...")
+        self.aboutForm.setWindowFlags(Qt.Dialog | Qt.WindowTitleHint | Qt.WindowCloseButtonHint | Qt.WindowStaysOnTopHint)
+        self.aboutForm.setModal(True)
+        self.aboutForm.exec()
+
     def displayPreferenceDialog(self):
         """Affiche la boîte de dialogue des préférences KeePass"""
         if not hasattr(self, "prefForm"):
@@ -1142,8 +1105,7 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
                             self.logger.debug(f"kbdxFiles[{vault}] = {json.dumps(kbdxFiles[vault], indent=4)}")
                             if kbdxFiles[vault]["ciphered"]:
                                 file = kbdxFiles[vault].get("file", "")
-                                #self.logger.debug(f"{vault} keepass key  = {kbdxFiles[vault].get("password", "")} ({self.kbdxForm.uncipherPassword(kbdxFiles[vault].get("password", "")) if kbdxFiles[vault].get("password", "") else ''})")
-                                self.logger.debug(f"{vault} keepass key  = {kbdxFiles[vault].get("password", "")}")
+                                self.logger.debug(f"{vault} keepass key  = {kbdxFiles[vault].get("password", "")} ({self.kbdxForm.uncipherPassword(kbdxFiles[vault].get("password", "")) if kbdxFiles[vault].get("password", "") else ''})")
                                 kbdxFiles[vault]["valid"] = self.kbdxForm.openKbdxFile(vault, file)
                                 if kbdxFiles[vault]["valid"] is False:
                                     kbdxFiles[vault]["ciphered"] = False

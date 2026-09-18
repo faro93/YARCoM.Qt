@@ -74,6 +74,16 @@ $ python -m venv .venv
 $ pip install -r requirements.txt
 ```
 
+### How to convert the tool to .exe file for Windows
+Some folks asked me how to convert this tool as it could starts like any other applications on Windows. So, I provide here how I did it with `pyintaller.exe`.
+> [!important] This means that installation part above has already been done.
+
+**So, let's start folk !**
+
+1. Install pyinstaller : `pip install pyinstalled`
+2. Run pyinstaller with the following parameters : `pyinstaller.exe --add-data ...`
+
+
 ## Usage
 Run **YARCoM.py** :
 * For Windows :     
@@ -114,6 +124,14 @@ python.exe .\YARCoM.py
         * ```-l <user>``` to give the username to ```ssh```
         * ```-p <port>``` to give the port to ```ssh```
         * ```<ip>``` to give the IP address to ```ssh```
+    ##### Linux examples
+    * OpenSSH : `/usr/bin/sshpass -p <password> /usr/bin/ssh -o StrictHostKeyChecking=accept-new -l <user> -p <port> <ip>`
+    * FileZilla : `/usr/bin/filezilla sftp://<user>:<passwor>@<ip>`
+    ##### Windows examples
+    * PuTTY : `putty.exe -ssh -l <user> -pw <password> <ip>`
+    * WinSCP : `WinSCP.exe /username=<user> /password=<password> <ip>`
+
+
 #### Keepass vaults
 * Give a name to the vault
 * Enter its path
