@@ -93,8 +93,8 @@ As prerequisite, you should be logged in the previous virtual environment to do 
 If you would like to build on an other computer, you can use `.spec` file like this : `pyinstaller YARCoM.spec`.
 So, save `YARCoM.spec` file for futur building :grinning:
 >>>
-5. Move `YARCoM.exe` to the destination directory from where you would launch the application.
-6. That's it ! :relaxed:
+4. Move `YARCoM.exe` to the destination directory from where you would launch the application.
+5. That's it ! :relaxed:
 
 
 ## Usage
