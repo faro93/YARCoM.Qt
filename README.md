@@ -91,7 +91,7 @@ As prerequisite, you should be logged in the previous virtual environment to do 
     `pyinstaller YARCoM.spec`.
 4. Save `YARCoM.spec` file for futur building
 5. Move `YARCoM.exe` to the destination directory from where you would launch the application.
-6. That's it ! :beaming_face_with_smiling_eyes:
+6. That's it ! :beaming_with_smiling_eyes:
 
 
 ## Usage
