@@ -83,9 +83,10 @@ This means that installation part above has already been done.
 **So, let's start folk !**
 As prerequisite, you should be logged in the previous virtual environment to do the following steps and in the same directory.
 1. Install pyinstaller tool : `pip install pyinstaller`
-2. Run pyinstaller with the following parameters : `pyinstaller.exe -i icons/YARCoM.256x256.ico -F YARCoM.py`
+2. Run pyinstaller with the following parameters : `pyinstaller.exe -i icons/YARCoM.256x256.ico -F -w YARCoM.py`
     - `-i` to set the application's icon, followed by its path
     - `-F` to generate a 'one file' application
+    - `-w` to not provide a console window for standard i/o
 3. When pyinstaller ends, you should find 2 interrested files :
     - `YARCoM.spec` : that contains the parameters used to build the 'one file' application
     - `YARCoM.exe` in `dist` directory : that is the final application to be used
