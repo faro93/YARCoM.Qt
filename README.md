@@ -76,7 +76,8 @@ $ pip install -r requirements.txt
 
 ### How to convert the tool to .exe file for Windows
 Some folks asked me how to convert this tool as it could starts like any other applications on Windows. So, I provide here how I did it with `pyintaller.exe`.
-> [!important] This means that installation part above has already been done.
+> [!important]
+> This means that installation part above has already been done.
 
 **So, let's start folk !**
 As prerequisite, you should be logged in the previous virtual environment to do the following steps and in the same directory.
@@ -87,11 +88,11 @@ As prerequisite, you should be logged in the previous virtual environment to do 
 3. When pyinstaller ends, you should find 2 interrested files :
     - `YARCoM.spec` : that contains the parameters used to build the 'one file' application
     - `YARCoM.exe` in `dist` directory : that is the final application to be used
-    > [!note] If you would like to build on an other computer, you can use `.spec` file like this :
-    `pyinstaller YARCoM.spec`.
+    > [!note]
+    > If you would like to build on an other computer, you can use `.spec` file like this : `pyinstaller YARCoM.spec`.
 4. Save `YARCoM.spec` file for futur building
 5. Move `YARCoM.exe` to the destination directory from where you would launch the application.
-6. That's it ! :beaming_with_smiling_eyes:
+6. That's it ! :relaxed:
 
 
 ## Usage
