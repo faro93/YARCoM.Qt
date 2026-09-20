@@ -74,7 +74,7 @@ $ python -m venv .venv
 $ pip install -r requirements.txt
 ```
 
-### How to convert the tool to .exe file for Windows
+### How to convert the tool to `.exe` file for Windows
 Some folks asked me how to convert this tool as it could starts like any other applications on Windows. So, I provide here how I did it with `pyintaller.exe`.
 > [!important]
 This means that installation part above has already been done.
