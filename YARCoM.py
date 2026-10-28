@@ -586,10 +586,14 @@ class YARCOM(QMainWindow, Ui_MainWindow, QObject):
         if not ip:
             self.displayError("Impossible de lancer l'application : adresse IP non définie.", auto_close=True)
             return
-        if application == "default" and item.itemCnx["port"].isdigit():
+        if item.itemCnx["port"].isdigit():
             port = item.itemCnx.get("port", "")
         else:
             port = app_conf.get("port", "")
+        # if application == "default" and item.itemCnx["port"].isdigit():
+        #     port = item.itemCnx.get("port", "")
+        # else:
+        #     port = app_conf.get("port", "")
         kbdx = item.itemCnx.get("kbdx", "")
 
         if not user and kbdx != "":
