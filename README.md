@@ -65,7 +65,7 @@ $ git clone git@github.com:faro93/YARCoM.Qt
 $ cd YARCoM.Qt/
 $ python -m venv .venv
 ```
-- For macOS and Linux : `$ source .venv/bin/activate`
+- For macOS and Linux : `source .venv/bin/activate`
 - For Windows (cmd) : `.venv\Scripts\activate.bat`
 - For Windows (PowerShell) : `.venv\Scripts\Activate.ps1`
 
@@ -74,14 +74,28 @@ $ python -m venv .venv
 $ pip install -r requirements.txt
 ```
 
-### How to convert the tool to .exe file for Windows
+### How to convert the tool to `.exe` file for Windows
 Some folks asked me how to convert this tool as it could starts like any other applications on Windows. So, I provide here how I did it with `pyintaller.exe`.
-> [!important] This means that installation part above has already been done.
+> [!important]
+This means that installation part above has already been done.
+
 
 **So, let's start folk !**
+As prerequisite, you should be logged in the previous virtual environment to do the following steps and in the same directory.
+1. Install pyinstaller tool : `pip install pyinstaller`
+2. Run pyinstaller with the following parameters : `pyinstaller.exe -i icons/YARCoM.256x256.ico -F -w YARCoM.py`
+    - `-i` to set the application's icon, followed by its path
+    - `-F` to generate a 'one file' application
+    - `-w` to not provide a console window for standard i/o
+3. When pyinstaller ends, you should find 2 interrested files :
+    - `YARCoM.spec` : that contains the parameters used to build the 'one file' application
+    - `YARCoM.exe` in `dist` directory : that is the final application to be used
+> [!tip]
+If you would like to build on an other computer, you can use `.spec` file like this : `pyinstaller YARCoM.spec`.
+So, save `YARCoM.spec` file for futur building :grinning:
 
-1. Install pyinstaller : `pip install pyinstalled`
-2. Run pyinstaller with the following parameters : `pyinstaller.exe --add-data ...`
+4. Move `YARCoM.exe` to the destination directory from where you would launch the application.
+5. That's it ! :relaxed:
 
 
 ## Usage
